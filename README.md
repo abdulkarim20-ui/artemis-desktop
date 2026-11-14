@@ -14,7 +14,7 @@ Run frontier AI models, converse with multiple documents (PDF, Word, Excel, Powe
 [![AI Providers](https://img.shields.io/badge/AI%20Providers-Groq%20%7C%20NVIDIA-EA846D?style=flat-square)](https://groq.com/)
 [![Vision](https://img.shields.io/badge/Vision-Image%20Chat-22c55e?style=flat-square)](https://github.com/abdulkarim20-ui/Artemis)
 [![Context](https://img.shields.io/badge/Context-Multi--Document%20%26%20Code-0284c7?style=flat-square)](https://github.com/abdulkarim20-ui/Artemis)
-[![Architecture](https://img.shields.io/badge/Architecture-100%25%20Local--First-8b5cf6?style=flat-square)](https://github.com/abdulkarim20-ui/Artemis)
+[![Architecture](https://img.shields.io/badge/Architecture-Local--First-8b5cf6?style=flat-square)](...)
 [![License](https://img.shields.io/badge/License-MIT-f59e0b?style=flat-square)](LICENSE)
 
 *Windows 10/11 · Node.js 20.19+ · Electron · Local Document & Codebase RAG · Vision Image Chat · Groq & NVIDIA*
