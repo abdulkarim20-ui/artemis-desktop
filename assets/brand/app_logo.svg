@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90" width="90" height="90" role="img" aria-labelledby="artemis-title">
+  <title id="artemis-title">Artemis</title>
+  <rect x="30" y="0" width="30" height="30" fill="#EA846D" fill-opacity=".9"/>
+  <rect x="0" y="30" width="30" height="30" fill="#EA846D"/>
+  <rect x="30" y="30" width="30" height="30" fill="#E7726D"/>
+  <rect x="60" y="30" width="30" height="30" fill="#E5606E"/>
+  <rect x="0" y="60" width="30" height="30" fill="#E7726D"/>
+  <rect x="60" y="60" width="30" height="30" fill="#E24E6E"/>
+</svg>

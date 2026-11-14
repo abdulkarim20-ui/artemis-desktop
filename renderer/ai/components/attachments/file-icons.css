@@ -1,0 +1,30 @@
+/* ==========================================================================
+   FILE TYPE ICONS (components/attachments/file-icons.css)
+   SVG icons are used as masks so they inherit the parent's text color.
+   ========================================================================== */
+
+.ai-file-type-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    background: var(--file-icon-bg, currentColor);
+    -webkit-mask-image: var(--file-icon);
+    mask-image: var(--file-icon);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+}
+
+.ai-doc-icon .ai-file-type-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Light theme needs darker variants for bright brand colors (e.g. JS yellow). */
+:root[data-theme="light"] .ai-file-type-icon {
+    background: var(--file-icon-bg-light, var(--file-icon-bg, currentColor));
+}

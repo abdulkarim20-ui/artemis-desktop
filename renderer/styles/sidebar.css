@@ -1,0 +1,87 @@
+.sidebar {
+  position: relative;
+  width: var(--sidebar-w-collapsed);
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 8px 14px;
+  overflow: hidden;
+  transition: width 0.2s var(--ease);
+}
+.sidebar[data-expanded="true"] { width: var(--sidebar-w-expanded); }
+
+.sidebar-resize-handle {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  width: 6px;
+  cursor: col-resize;
+  touch-action: none;
+}
+.sidebar[data-expanded="true"] .sidebar-resize-handle { display: block; }
+.sidebar.is-resizing { transition: none; }
+
+body.is-resizing-sidebar,
+body.is-resizing-sidebar * {
+  cursor: col-resize !important;
+  user-select: none !important;
+}
+
+.nav-group { display: flex; flex-direction: column; gap: 4px; }
+.nav-group--footer::before {
+  content: "";
+  width: 80%;
+  height: 1px;
+  align-self: center;
+  margin-bottom: 8px;
+  background: var(--border);
+}
+.nav-spacer { flex: 1; }
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 36px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--icon);
+  cursor: pointer;
+  text-align: left;
+}
+.nav-btn .icon { width: 18px; height: 18px; flex: none; }
+.nav-btn:hover { background: var(--hover); color: var(--icon-hover); }
+.nav-btn[aria-current="true"] { background: var(--active); color: var(--icon-hover); }
+.nav-group--footer .nav-btn { color: var(--text); }
+
+/* New Chat is an action, not a selected page. */
+.nav-btn[data-action] {
+  padding: 0 7px;
+  border: 1px solid transparent;
+  color: var(--text);
+  transition: background 0.15s var(--ease), color 0.15s var(--ease), transform 0.1s var(--ease);
+}
+.nav-btn[data-action] .label { font-weight: 500; }
+.nav-btn[data-action]:hover {
+  background: var(--hover);
+}
+.nav-btn[data-action][aria-pressed="true"] {
+  background: var(--active);
+  color: var(--icon-hover);
+}
+.nav-btn[data-action]:active { transform: scale(0.985); }
+.nav-btn[data-action][aria-current="true"] { background: transparent; }
+
+.label {
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.15s var(--ease);
+}
+.sidebar[data-expanded="true"] .label { opacity: 1; }

@@ -1,0 +1,823 @@
+/* ==========================================================================
+   INPUT COMPONENT STYLES (components/input/ai-input.css)
+   Isolated, responsive input component with dynamic button states
+   ========================================================================== */
+
+.ai-input-component {
+    width: 100%;
+    max-width: 644px;
+    margin: 0 auto;
+    position: relative;
+    font-family: var(--ai-font-sans, system-ui, sans-serif);
+    transition: max-width 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ai-app-shell.is-chatting .ai-input-component {
+    max-width: 766px;
+}
+
+/* Outer Card Container (Fresh / Centered Chat) */
+.ai-input-card {
+    background-color: var(--ai-bg-input, #1f1f20);
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.08));
+    border-radius: var(--ai-radius-lg, 18px);
+    padding: 14px 16px 12px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 109px;
+    box-shadow: var(--ai-shadow-card, 0 8px 32px rgba(0, 0, 0, 0.35));
+    transition:
+        border-color var(--ai-transition-normal),
+        box-shadow var(--ai-transition-normal),
+        border-radius 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+        min-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+/*
+ * Fresh-chat layout: prompt on top, then a toolbar row with the plus button
+ * on the left and the model selector / voice controls on the right.
+ * The docked state (below) collapses this into a single pill row.
+ */
+.ai-input-main {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas:
+        "textarea textarea"
+        "plus right";
+    gap: 10px 0;
+    width: 100%;
+    flex: 1 1 auto;
+}
+
+.ai-plus-btn-wrap {
+    grid-area: plus;
+    justify-self: start;
+    align-self: end;
+}
+
+.ai-input-main .ai-textarea {
+    grid-area: textarea;
+    align-self: start;
+}
+
+.ai-toolbar-right {
+    grid-area: right;
+    justify-self: end;
+    align-self: end;
+}
+
+.ai-input-card:hover {
+    border-color: var(--ai-text-primary, #ffffff);
+}
+
+.ai-input-card:focus-within {
+    border-color: var(--ai-text-primary, #ffffff);
+}
+
+/* Attachments preview styles are loaded modularly from components/attachments/attachments.css */
+
+/* Textarea Field */
+.ai-textarea {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    color: var(--ai-text-primary, #ffffff);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    min-height: 28px;
+    /* Five lines plus the 2px top/bottom padding. JS measures the live font
+       metrics; this is the no-JS ceiling and keeps layout stable on load. */
+    max-height: calc(5 * 1.5em + 4px);
+    padding: 2px 4px;
+    margin: 0;
+    overflow-y: hidden;
+    /* These two inherit from :root. Setting either one makes Chromium ignore
+       the 5px ::-webkit-scrollbar rules below and draw its own 10px bar, so
+       reset them here and let the custom slim bar render. */
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+}
+
+/* Modern Modular Scrollbar for Input Textarea */
+.ai-textarea::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.ai-textarea::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.ai-textarea::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
+}
+
+.ai-textarea::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+    transition: background var(--ai-transition-fast);
+}
+
+.ai-textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.ai-textarea::-webkit-scrollbar-thumb:active {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.ai-textarea::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.ai-textarea::placeholder {
+    color: var(--ai-text-muted, #6b6d74);
+    font-weight: 400;
+}
+
+/* Footer row under the composer: docked chat only (disclaimer + model selector) */
+.ai-input-footer {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    padding: 8px 4px 0;
+}
+
+.ai-input-disclaimer {
+    color: var(--ai-text-muted, #6b6d74);
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Plus / Attachment Button */
+.ai-plus-btn-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ai-btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--ai-text-primary, #ffffff);
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.15s ease, background-color 0.15s ease, transform 0.12s ease;
+}
+
+.ai-btn-icon .icon,
+.ai-mic-btn .icon,
+.ai-send-btn .icon {
+    width: 18px;
+    height: 18px;
+}
+
+.ai-btn-icon:hover {
+    background: var(--ai-bg-pill-active, rgba(255, 255, 255, 0.08));
+}
+
+.ai-btn-icon:active {
+    transform: scale(0.94);
+}
+
+/* Right Group */
+.ai-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Model Selector Badge Anchor & Wrap */
+.ai-model-badge-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: min(45vw, 320px);
+}
+
+.ai-model-badge {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    gap: 6px;
+    font: inherit;
+    font-family: var(--ai-model-name-font);
+    font-size: var(--ai-model-name-size);
+    line-height: var(--ai-model-name-line);
+    color: var(--ai-text-dim, #9a98a3);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px 8px;
+    border-radius: 9px;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ai-model-badge:hover {
+    background: var(--ai-bg-soft, #16161c);
+}
+
+.ai-model-badge:focus,
+.ai-model-badge:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.ai-model-name {
+    display: inline;
+    min-width: 0;
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--ai-model-name-color);
+    font-family: var(--ai-model-name-font);
+    font-size: var(--ai-model-name-size);
+    font-weight: var(--ai-model-name-weight);
+    line-height: var(--ai-model-name-line);
+    letter-spacing: var(--ai-model-name-tracking);
+}
+
+.ai-model-current-icon {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: var(--ai-model-name-color);
+}
+.ai-model-current-icon[hidden] { display: none; }
+
+.ai-model-version {
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+}
+
+.ai-model-tier {
+    color: var(--ai-text-dim, #9a98a3);
+    font-size: inherit;
+    font-weight: 400;
+    margin-left: 2px;
+}
+
+.ai-model-chevron {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+    color: var(--ai-text-dim, #9a98a3);
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.ai-model-badge:hover .ai-model-chevron {
+    opacity: 1;
+    color: var(--ai-text-bright, #efece6);
+}
+
+/* Action Control Area */
+.ai-action-slot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+    height: 32px;
+}
+
+/* Standalone Mic Button */
+.ai-mic-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    color: var(--ai-text-primary, #ffffff);
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 4px;
+    transition: color var(--ai-transition-fast), background var(--ai-transition-fast), transform var(--ai-transition-fast);
+}
+
+.ai-mic-btn:hover {
+    color: var(--ai-text-primary, #ffffff);
+    background: var(--ai-bg-pill-active, rgba(255, 255, 255, 0.08));
+}
+
+.ai-mic-btn:focus,
+.ai-mic-btn:focus-visible,
+.ai-voice-action-btn:focus,
+.ai-voice-action-btn:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+.ai-mic-btn:active {
+    transform: scale(0.94);
+}
+
+.ai-mic-btn[hidden],
+.ai-model-badge-wrap[hidden],
+.ai-voice-active-bar[hidden] {
+    display: none !important;
+}
+
+.ai-voice-active-bar {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    flex: 0 0 auto;
+    animation: ai-voice-bar-in 0.24s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.ai-voice-wave {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    width: 88px;
+    height: 24px;
+    flex: 0 0 88px;
+    color: var(--ai-text-dim, #9a98a3);
+}
+
+.ai-voice-wave > span {
+    width: 2px;
+    height: 18px;
+    flex: 0 0 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: scaleY(var(--wave-scale, 0.2));
+    transition: transform 85ms cubic-bezier(0.2, 0, 0, 1);
+    animation: ai-voice-wave 0.9s ease-in-out infinite alternate;
+}
+
+.ai-voice-wave > span:nth-child(1),
+.ai-voice-wave > span:nth-child(19) { --wave-peak: 0.16; }
+.ai-voice-wave > span:nth-child(2),
+.ai-voice-wave > span:nth-child(18) { --wave-peak: 0.22; }
+.ai-voice-wave > span:nth-child(3),
+.ai-voice-wave > span:nth-child(17) { --wave-peak: 0.3; }
+.ai-voice-wave > span:nth-child(4),
+.ai-voice-wave > span:nth-child(16) { --wave-peak: 0.4; }
+.ai-voice-wave > span:nth-child(5),
+.ai-voice-wave > span:nth-child(15) { --wave-peak: 0.5; }
+.ai-voice-wave > span:nth-child(6),
+.ai-voice-wave > span:nth-child(14) { --wave-peak: 0.62; }
+.ai-voice-wave > span:nth-child(7),
+.ai-voice-wave > span:nth-child(13) { --wave-peak: 0.75; }
+.ai-voice-wave > span:nth-child(8),
+.ai-voice-wave > span:nth-child(12) { --wave-peak: 0.88; }
+.ai-voice-wave > span:nth-child(9),
+.ai-voice-wave > span:nth-child(11) { --wave-peak: 1; }
+.ai-voice-wave > span:nth-child(10) { --wave-peak: 1.2; }
+
+.ai-voice-wave > span:nth-child(3n) {
+    animation-delay: 0.12s;
+}
+
+.ai-voice-wave > span:nth-child(3n + 1) {
+    animation-delay: 0.24s;
+}
+
+.ai-input-component.has-audio-level .ai-voice-wave > span {
+    animation: none;
+}
+
+.ai-voice-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.12s ease, border-color 0.15s ease;
+}
+
+.ai-voice-action-btn svg {
+    pointer-events: none;
+}
+
+.ai-voice-action-btn:active {
+    transform: scale(0.92);
+}
+
+.ai-voice-cancel-btn {
+    background: #2b2b32;
+    color: #e2e2ea;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ai-voice-cancel-btn:hover {
+    background: #383842;
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+.ai-voice-done-btn {
+    background: #ffffff;
+    color: #0c0c10;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+
+.ai-voice-done-btn:hover {
+    background: #e8e8ec;
+    border-color: #ffffff;
+    transform: scale(1.04);
+}
+
+@keyframes ai-voice-wave {
+    from { transform: scaleY(0.1); }
+    to { transform: scaleY(var(--wave-peak, 0.45)); }
+}
+
+@keyframes ai-voice-bar-in {
+    from {
+        opacity: 0;
+        transform: translateX(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.ai-mic-btn.is-requesting::after,
+.ai-mic-btn.is-transcribing::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: ai-mic-spin 0.8s linear infinite;
+}
+
+.ai-mic-btn:disabled {
+    cursor: default;
+}
+
+.ai-mic-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    clip-path: inset(50%);
+    border: 0;
+}
+
+@keyframes ai-mic-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ai-mic-btn.is-requesting::after,
+    .ai-mic-btn.is-transcribing::after {
+        animation: none;
+    }
+
+    .ai-voice-wave > span,
+    .ai-voice-active-bar {
+        animation: none;
+    }
+}
+
+/* Solid White Send Button (Matching Active Chat Pill) */
+.ai-send-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: #ffffff;
+    color: #0c0c10;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    transition: background-color var(--ai-transition-fast), transform var(--ai-transition-fast), box-shadow var(--ai-transition-fast), border-radius 0.35s ease;
+}
+
+.ai-send-btn:hover {
+    background-color: #ffffff;
+    transform: scale(1.04);
+}
+
+.ai-send-btn:active {
+    transform: scale(0.95);
+}
+
+/* Minimalist Curved Return Send Button (Active after Voice Dictation) */
+.ai-send-btn.ai-send-btn-curved {
+    background-color: #ffffff;
+    color: #0c0c10;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 9px;
+}
+
+.ai-send-btn.ai-send-btn-curved:hover {
+    background-color: #ffffff;
+    transform: scale(1.04);
+}
+
+.ai-input-notice {
+    margin: 0 12px 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-panel);
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.ai-input-notice[data-tone="warn"] {
+    border-color: var(--palette-warning);
+    color: var(--text);
+}
+
+.ai-model-cap {
+    margin-left: 8px;
+    padding: 1px 6px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+.ai-hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   DOCKED CHAT STATE (after the first prompt)
+   Compact single-row pill + the disclaimer / model footer.
+   ========================================================================== */
+
+.ai-input-component.is-docked .ai-input-card {
+    border-radius: 26px;
+    padding: 6px 10px 6px 12px;
+    min-height: 44px;
+}
+
+.ai-input-component.is-docked .ai-input-main {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+
+.ai-input-component.is-docked .ai-plus-btn-wrap {
+    /* The controls stay on the last line while the prompt grows upward. */
+    align-self: flex-end;
+}
+
+.ai-input-component.is-docked .ai-textarea {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.95rem;
+    min-height: 24px;
+    max-height: calc(5 * 1.5em + 6px);
+    padding: 3px 0;
+}
+
+.ai-input-component.is-docked .ai-toolbar-right {
+    gap: 2px;
+    height: 30px;
+    /* Keep mic/send pinned to the bottom instead of floating mid-height. */
+    align-self: flex-end;
+}
+
+.ai-input-component.is-docked .ai-action-slot {
+    height: 30px;
+}
+
+.ai-input-component.is-docked .ai-btn-icon:hover {
+    color: var(--ai-text-primary, #ffffff);
+    background: var(--ai-bg-surface-hover, #262627);
+}
+
+.ai-input-component.is-docked .ai-send-btn,
+.ai-input-component.is-docked .ai-send-btn.ai-send-btn-curved {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.ai-input-component.is-docked .ai-input-footer {
+    display: flex;
+}
+
+/* Match the footer model selector to the disclaimer's type scale. */
+.ai-input-footer .ai-model-badge {
+    gap: 4px;
+    padding: 3px 5px;
+    font-size: 12px;
+    line-height: 1.4;
+    width: 100%;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+.ai-input-footer .ai-input-disclaimer {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.ai-input-footer .ai-model-badge-wrap {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 55%;
+}
+
+.ai-input-footer .ai-model-name {
+    flex: 1 1 auto;
+    color: var(--ai-model-name-color);
+    font-family: var(--ai-model-name-font);
+    font-size: 12px;
+    font-weight: var(--ai-model-name-weight);
+    line-height: var(--ai-model-name-line);
+    letter-spacing: var(--ai-model-name-tracking);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ai-input-footer .ai-model-tier,
+.ai-input-footer .ai-model-chevron {
+    flex: 0 0 auto;
+}
+
+.ai-input-footer .ai-model-chevron {
+    width: 12px;
+    height: 12px;
+}
+
+/* ==========================================================================
+   DROP-UP CONTEXT MENUS (Popover)
+   ========================================================================== */
+
+/* Plus Attachment Anchor Wrapper */
+.ai-plus-btn-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.ai-dropdown-menu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    background-color: var(--ai-bg-input, #1f1f20);
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.08));
+    border-radius: var(--ai-radius-lg, 16px);
+    box-shadow: var(--ai-shadow-popup, 0 10px 28px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.16));
+    padding: 8px 6px;
+    min-width: 250px;
+    max-height: 320px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    animation: ai-popin 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-dropdown-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.ai-dropdown-menu::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.ai-dropdown-menu::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 4px 0;
+}
+
+.ai-dropdown-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 9999px;
+    transition: background var(--ai-transition-fast);
+}
+
+.ai-dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.38);
+}
+
+.ai-dropdown-menu.align-right {
+    right: 0;
+    left: auto;
+    transform-origin: bottom right;
+}
+
+.ai-dropdown-menu.align-left {
+    left: 0;
+    right: auto;
+    transform-origin: bottom left;
+}
+
+.ai-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: var(--ai-text-secondary, #9ea0a6);
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--ai-transition-fast), color var(--ai-transition-fast);
+    width: 100%;
+}
+
+.ai-dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--ai-text-primary, #ffffff);
+}
+
+.ai-dropdown-item.is-selected {
+    color: var(--ai-accent, var(--palette-coral));
+    font-weight: 500;
+}
+
+.ai-menu-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e4e4e7;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.ai-menu-left .ai-menu-icon {
+    color: inherit;
+    flex: none;
+    width: 18px;
+    height: 18px;
+}
+
+.ai-dropdown-item:hover .ai-menu-left .ai-menu-icon {
+    color: #ffffff;
+}
+
+.ai-menu-right-text {
+    font-size: 0.78rem;
+    color: #71717a;
+    font-family: var(--ai-font-mono, monospace);
+}
+
+@keyframes ai-popin {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

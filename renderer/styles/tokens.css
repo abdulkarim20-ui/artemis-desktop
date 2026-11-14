@@ -1,0 +1,63 @@
+:root {
+  --brand-1: #EA846D;
+  --brand-2: #E7726D;
+  --brand-3: #E5606E;
+  --brand-4: #E24E6E;
+
+  --palette-peach: var(--brand-1);
+  --palette-coral: var(--brand-2);
+  --palette-deep-coral: var(--brand-4);
+  --palette-rose: #C23F5F;
+  --palette-brand-gradient: linear-gradient(135deg, var(--brand-1) 0%, var(--brand-4) 100%);
+
+  --palette-night: #0D0C0C;
+  --palette-panel: #141212;
+  --palette-line: #231F1F;
+  --palette-muted: #948C88;
+  --palette-snow: #F7F4F1;
+  --palette-paper: #ECE6E1;
+  --palette-ink: #1A1615;
+  --palette-warm-grey: #675D59;
+
+  --palette-source-blue: #9AA3B5;
+  --palette-success: #6DB48F;
+  --palette-warning: #D8A24A;
+  --palette-danger: #D8504E;
+
+  --titlebar-h: 48px;
+  --sidebar-w-collapsed: 52px;
+  --sidebar-w-expanded: 208px;
+  --panel-radius: 18px;
+  --panel-gap: 14px;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --font: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  /* One icon color everywhere, matching the Settings item. */
+  --icon: var(--muted);
+  --icon-hover: var(--text);
+}
+
+:root[data-theme="dark"] {
+  --bg-chrome: var(--palette-night);
+  --bg-panel: var(--palette-panel);
+  --border: var(--palette-line);
+  --text: var(--palette-snow);
+  --muted: var(--palette-muted);
+  --hover: color-mix(in srgb, var(--palette-line) 72%, var(--palette-panel));
+  --active: var(--palette-line);
+  --focus: var(--brand-2);
+  --scroll-thumb: rgba(255, 255, 255, 0.14);
+  --scroll-thumb-hover: rgba(255, 255, 255, 0.28);
+}
+
+:root[data-theme="light"] {
+  --bg-chrome: var(--palette-paper);
+  --bg-panel: var(--palette-snow);
+  --border: color-mix(in srgb, var(--palette-warm-grey) 22%, var(--palette-paper));
+  --text: var(--palette-ink);
+  --muted: var(--palette-warm-grey);
+  --hover: color-mix(in srgb, var(--palette-warm-grey) 9%, var(--palette-snow));
+  --active: color-mix(in srgb, var(--palette-warm-grey) 15%, var(--palette-snow));
+  --focus: var(--palette-rose);
+  --scroll-thumb: rgba(0, 0, 0, 0.18);
+  --scroll-thumb-hover: rgba(0, 0, 0, 0.34);
+}

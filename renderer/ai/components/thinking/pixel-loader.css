@@ -1,0 +1,27 @@
+.ai-thinking-pixel-loader {
+    --pixel-color: rgb(234 132 109);
+    --pixel-glow-1: rgb(234 132 109 / .7);
+    --pixel-glow-2: rgb(234 132 109 / .72);
+    --pixel-glow-3: rgb(234 132 109 / .35);
+    display: grid;
+    grid-template: repeat(3, 5px) / repeat(3, 5px);
+    width: 15px;
+    height: 15px;
+    filter:
+        drop-shadow(0 0 1.5px var(--pixel-glow-1))
+        drop-shadow(0 0 5px var(--pixel-glow-2))
+        drop-shadow(0 0 8px var(--pixel-glow-3));
+    flex: 0 0 15px;
+}
+
+.ai-thinking-pixel-loader i {
+    display: block;
+    background: var(--pixel-color);
+    opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ai-thinking-pixel-loader {
+        filter: none;
+    }
+}

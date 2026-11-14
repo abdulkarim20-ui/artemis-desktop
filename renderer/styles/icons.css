@@ -1,0 +1,53 @@
+/* Icons are SVG files in ../../assets/icons, painted with the current text color. */
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+}
+
+.icon-sidebar  { -webkit-mask-image: url("../../assets/icons/sidebar.svg");  mask-image: url("../../assets/icons/sidebar.svg"); }
+.icon-sidebar-collapsed { -webkit-mask-image: url("../../assets/icons/sidebar-collapsed.svg"); mask-image: url("../../assets/icons/sidebar-collapsed.svg"); }
+.icon-chat     { -webkit-mask-image: url("../../assets/icons/chat.svg");     mask-image: url("../../assets/icons/chat.svg"); }
+.icon-sun      { -webkit-mask-image: url("../../assets/icons/sun.svg");      mask-image: url("../../assets/icons/sun.svg"); }
+.icon-moon     { -webkit-mask-image: url("../../assets/icons/moon.svg");     mask-image: url("../../assets/icons/moon.svg"); }
+.icon-display  { -webkit-mask-image: url("../../assets/icons/display.svg");  mask-image: url("../../assets/icons/display.svg"); }
+.icon-settings { -webkit-mask-image: url("../../assets/icons/settings.svg"); mask-image: url("../../assets/icons/settings.svg"); }
+.icon-minimize { -webkit-mask-image: url("../../assets/icons/minimize.svg"); mask-image: url("../../assets/icons/minimize.svg"); }
+.icon-maximize { -webkit-mask-image: url("../../assets/icons/maximize.svg"); mask-image: url("../../assets/icons/maximize.svg"); }
+.icon-restore  { -webkit-mask-image: url("../../assets/icons/restore.svg");  mask-image: url("../../assets/icons/restore.svg"); }
+.icon-close    { -webkit-mask-image: url("../../assets/icons/close.svg");    mask-image: url("../../assets/icons/close.svg"); }
+.icon-folder   { -webkit-mask-image: url("../../assets/icons/folder.svg");   mask-image: url("../../assets/icons/folder.svg"); }
+.icon-key      { -webkit-mask-image: url("../../assets/icons/key.svg");      mask-image: url("../../assets/icons/key.svg"); }
+.icon-search   { -webkit-mask-image: url("../../assets/icons/search.svg");   mask-image: url("../../assets/icons/search.svg"); }
+.icon-file     { -webkit-mask-image: url("../../assets/icons/file.svg");     mask-image: url("../../assets/icons/file.svg"); }
+.icon-book     { -webkit-mask-image: url("../../assets/icons/book.svg");     mask-image: url("../../assets/icons/book.svg"); }
+.icon-plus     { -webkit-mask-image: url("../../assets/icons/plus.svg");     mask-image: url("../../assets/icons/plus.svg"); }
+.icon-paperclip { -webkit-mask-image: url("../../assets/icons/paperclip.svg"); mask-image: url("../../assets/icons/paperclip.svg"); }
+.icon-globe    { -webkit-mask-image: url("../../assets/icons/globe.svg");    mask-image: url("../../assets/icons/globe.svg"); }
+.icon-check    { -webkit-mask-image: url("../../assets/icons/check.svg");    mask-image: url("../../assets/icons/check.svg"); }
+.icon-chevron-down { -webkit-mask-image: url("../../assets/icons/chevron-down.svg"); mask-image: url("../../assets/icons/chevron-down.svg"); }
+.icon-chevron-right { -webkit-mask-image: url("../../assets/icons/chevron-right.svg"); mask-image: url("../../assets/icons/chevron-right.svg"); }
+.icon-microphone { -webkit-mask-image: url("../../assets/icons/microphone.svg"); mask-image: url("../../assets/icons/microphone.svg"); }
+.icon-arrow-up  { -webkit-mask-image: url("../../assets/icons/arrow-up.svg");  mask-image: url("../../assets/icons/arrow-up.svg"); }
+.icon-undo      { -webkit-mask-image: url("../../assets/icons/undo.svg");      mask-image: url("../../assets/icons/undo.svg"); }
+.icon-edit      { -webkit-mask-image: url("../../assets/icons/edit.svg");      mask-image: url("../../assets/icons/edit.svg"); }
+.icon-trash     { -webkit-mask-image: url("../../assets/icons/trash.svg");     mask-image: url("../../assets/icons/trash.svg"); }
+.icon-eye       { -webkit-mask-image: url("../../assets/icons/eye.svg");       mask-image: url("../../assets/icons/eye.svg"); }
+.icon-eye-off   { -webkit-mask-image: url("../../assets/icons/eye-off.svg");   mask-image: url("../../assets/icons/eye-off.svg"); }
+.icon-external-link { -webkit-mask-image: url("../../assets/icons/external-link.svg"); mask-image: url("../../assets/icons/external-link.svg"); }
+.icon-copy      { -webkit-mask-image: url("../../assets/icons/copy.svg");      mask-image: url("../../assets/icons/copy.svg"); }
+.icon-code      { -webkit-mask-image: url("../../assets/icons/code.svg");      mask-image: url("../../assets/icons/code.svg"); }
+.icon-model      { -webkit-mask-image: url("../../assets/icons/model.svg");      mask-image: url("../../assets/icons/model.svg"); }
+
+/* Model vendor marks used by the model selector. */
+.icon-brand-openai { -webkit-mask-image: url("../../assets/model-icons/brand-openai.svg"); mask-image: url("../../assets/model-icons/brand-openai.svg"); }
+.icon-brand-nvidia { -webkit-mask-image: url("../../assets/model-icons/nvidia.svg");       mask-image: url("../../assets/model-icons/nvidia.svg"); }
+.icon-brand-qwen   { -webkit-mask-image: url("../../assets/model-icons/qwen.svg");         mask-image: url("../../assets/model-icons/qwen.svg"); }

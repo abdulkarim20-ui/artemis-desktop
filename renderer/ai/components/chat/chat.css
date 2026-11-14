@@ -1,0 +1,548 @@
+/* ==========================================================================
+   CHAT COMPONENT STYLES (components/chat/chat.css)
+   Handles message layouts, markdown styling, and feedback actions
+   ========================================================================== */
+
+.ai-chat-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 100%;
+    max-width: 806px;
+    margin: 0 auto;
+    padding: 10px 20px 30px 20px;
+}
+
+.ai-msg-row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    animation: ai-fadeIn 200ms ease-out;
+}
+
+.ai-msg-row.user {
+    align-items: flex-end;
+}
+
+.ai-msg-row.assistant {
+    align-items: flex-start;
+}
+
+/* Compact snug gap between Thought for Xs and response message */
+.ai-msg-row.has-thinking + .ai-msg-row.assistant,
+.ai-msg-row:has(.ai-thinking) + .ai-msg-row.assistant {
+    margin-top: -13px;
+}
+
+/* User Message Wrapper */
+.ai-user-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-width: 84%;
+}
+
+/* User Message Bubble */
+.ai-user-bubble {
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: var(--ai-text-primary, #f5f5f6);
+    font-family: var(--ai-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+    font-size: 0.96rem;
+    font-weight: 400;
+    line-height: 1.52;
+    letter-spacing: -0.01em;
+    padding: 12px 16px;
+    border-radius: 16px;
+    max-width: 100%;
+    min-width: 0;
+    word-break: break-word;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Assistant Message Wrapper */
+.ai-assistant-wrapper {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* AI Response Message & Markdown Typography */
+.ai-response-message,
+.ai-markdown {
+    font-family: var(--ai-font-response, 'Crimson Pro', Georgia, serif);
+    font-size: 1.05rem; /* ~16.8px */
+    font-weight: 400;
+    color: var(--ai-text-response, #F0EFEC);
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+    word-break: break-word;
+    padding: 0 32px 0 4px;
+}
+
+.ai-markdown p {
+    margin-bottom: 14px;
+}
+
+.ai-markdown p:last-child {
+    margin-bottom: 0;
+}
+
+.ai-markdown strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.ai-markdown h1, .ai-markdown h2, .ai-markdown h3 {
+    color: #ffffff;
+    margin: 20px 0 10px 0;
+    font-weight: 600;
+}
+
+.ai-markdown h1 { font-size: 1.5rem; }
+.ai-markdown h2 { font-size: 1.3rem; }
+.ai-markdown h3 { font-size: 1.1rem; }
+
+.ai-markdown ul, .ai-markdown ol {
+    margin: 10px 0 14px 22px;
+    padding: 0;
+}
+
+.ai-markdown li {
+    margin-bottom: 6px;
+}
+
+
+
+/* Footer Actions */
+.ai-msg-footer {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 14px;
+    color: var(--ai-text-secondary, #9ca3af);
+    font-size: 0.85rem;
+}
+
+.ai-msg-time {
+    color: var(--ai-text-muted, #6b6d74);
+    font-size: 0.82rem;
+}
+
+.ai-action-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-action-btn {
+    background: transparent;
+    border: none;
+    color: var(--ai-text-secondary, #9ea0a6);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--ai-transition-fast), background var(--ai-transition-fast), transform var(--ai-transition-fast);
+}
+
+.ai-action-btn:hover {
+    color: var(--ai-text-primary, #ffffff);
+    background: var(--ai-bg-surface-hover, rgba(255, 255, 255, 0.06));
+}
+
+.ai-action-btn:active {
+    transform: scale(0.92);
+}
+
+.ai-action-btn.active-like {
+    color: var(--palette-success);
+}
+
+.ai-action-btn.active-dislike {
+    color: var(--palette-danger);
+}
+
+/* Smooth AI Streaming Cursor */
+.ai-typing-cursor::after {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 1.2em;
+    background-color: var(--ai-text-primary, #ffffff);
+    vertical-align: text-bottom;
+    margin-left: 4px;
+    border-radius: 2px;
+    animation: ai-smooth-pulse 0.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+
+
+@keyframes ai-smooth-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.15; }
+}
+
+@keyframes ai-fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* AI Thinking Animation */
+.ai-thinking-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 18px;
+    background: transparent;
+}
+
+.ai-thinking-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--ai-accent, var(--palette-coral));
+    border-radius: 50%;
+    animation: ai-think-bounce 1.4s infinite ease-in-out both;
+}
+
+.ai-thinking-dot:nth-child(1) { animation-delay: -0.32s; }
+.ai-thinking-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes ai-think-bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+/* User Message File Attachments Container */
+.ai-user-attachments {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+    width: 100%;
+}
+
+/* Adaptive User Image Grid / Collage */
+.ai-user-image-grid {
+    display: grid;
+    gap: 5px;
+    width: fit-content;
+    max-width: 300px;
+}
+
+.ai-user-img-cell {
+    position: relative;
+    overflow: hidden;
+    background: #000000;
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.09));
+    border-radius: 12px;
+    transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ai-user-img-cell:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.ai-user-img-cell img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 1 Image: Showcase Card */
+.ai-user-image-grid[data-count="1"] {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+}
+
+.ai-user-image-grid[data-count="1"] .ai-user-img-cell {
+    border-radius: 18px 18px 4px 18px;
+    max-height: 320px;
+}
+
+.ai-user-image-grid[data-count="1"] img {
+    height: auto;
+    max-height: 320px;
+}
+
+/* 2 Images: 2 Columns Side-by-Side */
+.ai-user-image-grid[data-count="2"] {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 300px;
+}
+
+.ai-user-image-grid[data-count="2"] .ai-user-img-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+}
+
+/* 3 Images: 2 top + 1 wide bottom */
+.ai-user-image-grid[data-count="3"] {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 290px;
+}
+
+.ai-user-image-grid[data-count="3"] .ai-user-img-cell:first-child {
+    grid-column: span 2;
+    aspect-ratio: 16 / 9;
+}
+
+.ai-user-image-grid[data-count="3"] .ai-user-img-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+}
+
+/* 4 Images: 2x2 Grid */
+.ai-user-image-grid[data-count="4"] {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 280px;
+}
+
+.ai-user-image-grid[data-count="4"] .ai-user-img-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 12px;
+}
+
+/* 5+ Images: Compact 3-column chip grid */
+.ai-user-image-grid:not([data-count="1"]):not([data-count="2"]):not([data-count="3"]):not([data-count="4"]) {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 320px;
+}
+
+.ai-user-image-grid:not([data-count="1"]):not([data-count="2"]):not([data-count="3"]):not([data-count="4"]) .ai-user-img-cell {
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+}
+
+/* Documents: compact chips, right-aligned, wrapping in a row */
+.ai-user-docs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
+}
+
+.ai-user-attachment-doc {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    max-width: 240px;
+    padding: 5px 12px 5px 6px;
+    background: var(--ai-bg-surface-active, #2f2f31);
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.09));
+    border-radius: 10px;
+    transition: border-color var(--ai-transition-fast);
+}
+
+.ai-user-attachment-doc:hover {
+    border-color: var(--ai-border-hover, rgba(255, 255, 255, 0.18));
+}
+
+.ai-doc-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex: none;
+    background: color-mix(in srgb, var(--palette-source-blue) 18%, transparent);
+    color: var(--palette-source-blue);
+    border-radius: 7px;
+}
+
+.ai-doc-icon .ai-file-type-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.ai-doc-icon .ai-fallback-file-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.ai-doc-name {
+    color: var(--ai-text-primary, #ffffff);
+    font-size: 0.84rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ai-user-attachment-more .ai-doc-icon {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--ai-text-secondary, #9ea0a6);
+}
+
+/* ==========================================================================
+   ATTACHMENT NOTES - what the model could not read
+   ========================================================================== */
+.ai-file-note {
+    align-self: flex-end;
+    max-width: 620px;
+    margin-top: 6px;
+    padding: 8px 12px;
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.08));
+    border-left: 2px solid #d9a13c;
+    border-radius: var(--ai-radius-sm, 8px);
+    background: var(--ai-bg-surface, #1e1e1f);
+    color: var(--ai-text-secondary, #9ea0a6);
+    font-size: 0.78rem;
+    line-height: 1.45;
+    text-align: left;
+}
+
+.ai-file-note-label {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--ai-text-primary, #f5f5f6);
+    font-weight: 600;
+}
+
+.ai-file-note-list {
+    margin: 0;
+    padding-left: 18px;
+    list-style: disc;
+}
+
+.ai-file-note-list li + li {
+    margin-top: 3px;
+}
+
+.ai-file-note-details > summary {
+    cursor: pointer;
+    color: var(--ai-text-primary, #f5f5f6);
+    font-weight: 600;
+    outline: none;
+}
+
+.ai-file-note-details > summary + .ai-file-note-list {
+    margin-top: 6px;
+}
+
+/* ==========================================================================
+   IMAGE LIGHTBOX / MODAL VIEWER
+   ========================================================================== */
+.ai-image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.ai-image-modal.ai-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.ai-image-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: zoom-out;
+}
+
+.ai-image-modal-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    max-height: 90vh;
+    padding: 16px;
+    animation: ai-modal-pop 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ai-image-modal-close {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, transform 0.15s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.ai-image-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.ai-image-modal-close:active {
+    transform: scale(0.92);
+}
+
+.ai-image-modal-img-wrap {
+    max-width: 86vw;
+    max-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.12);
+    background: #000000;
+}
+
+.ai-image-modal-img {
+    max-width: 86vw;
+    max-height: 80vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.ai-image-modal-caption {
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.88rem;
+    text-align: center;
+    max-width: 600px;
+    font-weight: 500;
+}
+
+body.ai-modal-open {
+    overflow: hidden !important;
+}
+
+@keyframes ai-modal-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+

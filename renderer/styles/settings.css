@@ -1,0 +1,528 @@
+/* ==========================================================================
+   SETTINGS VIEW
+   Left section navigation + preference cards, matching the Artemis shell.
+   ========================================================================== */
+
+.settings {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Left rail --------------------------------------------------------------- */
+.settings-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 232px;
+  flex: none;
+  padding: 28px 14px 18px;
+  border-right: 1px solid var(--border);
+}
+
+.settings-nav-title {
+  padding: 0 10px 10px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.settings-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  height: 38px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--icon);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.settings-nav-btn .icon {
+  width: 18px;
+  height: 18px;
+}
+
+.settings-nav-btn:hover {
+  background: var(--hover);
+  color: var(--icon-hover);
+}
+
+.settings-nav-btn[aria-current="true"] {
+  background: var(--active);
+  color: var(--icon-hover);
+  font-weight: 500;
+}
+
+.settings-nav-footer {
+  margin-top: auto;
+  padding: 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* Content ----------------------------------------------------------------- */
+.settings-content {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 48px 56px 64px;
+}
+
+.settings-content-inner {
+  max-width: 780px;
+}
+
+.settings-title {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.settings-subtitle {
+  margin: 8px 0 28px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Preference card --------------------------------------------------------- */
+.settings-card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--hover);
+  background: color-mix(in srgb, var(--text) 4%, var(--bg-panel));
+  /* Deliberately not clipped: the theme menu opens over the card edge. */
+  overflow: visible;
+}
+
+.settings-content-inner[data-panel="general"] > .settings-card + .settings-card {
+  margin-top: 12px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 18px 22px;
+  border-top: 1px solid var(--border);
+}
+
+.settings-row:first-child {
+  border-top: 0;
+}
+
+.settings-row-copy {
+  min-width: 0;
+}
+
+.settings-row-title {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.settings-row-hint {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.settings-row-control {
+  flex: none;
+  display: flex;
+  align-items: center;
+}
+
+/* Shortcut hints ---------------------------------------------------------- */
+.settings-keys {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.settings-key-plus {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.settings-kbd {
+  min-width: 26px;
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 6px;
+  background: var(--hover);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 12px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+/* History folder ---------------------------------------------------------- */
+.settings-history-path {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--hover);
+  color: var(--muted);
+  font-family: Consolas, "Cascadia Mono", monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  user-select: text; /* the path can be copied */
+}
+
+.settings-history-hint {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.settings-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--hover);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+
+.settings-btn:hover { background: var(--active); }
+
+.settings-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+.settings-btn .icon { width: 15px; height: 15px; color: var(--muted); }
+
+/* Theme dropdown ---------------------------------------------------------- */
+.settings-select-wrap {
+  position: relative;
+}
+
+.settings-select {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 140px;
+  height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--hover);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+
+.settings-select:hover {
+  background: var(--active);
+}
+
+.settings-select-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+}
+
+.settings-select-label {
+  flex: 1;
+  text-align: left;
+}
+
+.settings-select-chevron {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  color: var(--muted);
+  transition: transform 0.15s var(--ease);
+}
+
+.settings-select[aria-expanded="true"] .settings-select-chevron {
+  transform: rotate(180deg);
+}
+
+.settings-select-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 165px;
+  height: 120px;
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-chrome);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.28);
+}
+
+.settings-select-menu[hidden] {
+  display: none;
+}
+
+.settings-select-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.settings-select-option:hover,
+.settings-select-option:focus-visible {
+  background: var(--hover);
+}
+
+.settings-select-option .icon {
+  width: 16px;
+  height: 16px;
+  color: var(--muted);
+}
+
+.settings-select-option-label {
+  flex: 1;
+}
+
+.settings-select-check {
+  display: inline-flex;
+  width: 15px;
+  height: 15px;
+  color: var(--text);
+  opacity: 0;
+}
+
+.settings-select-check .icon {
+  width: 15px;
+  height: 15px;
+}
+
+.settings-select-option[aria-selected="true"] .settings-select-check {
+  opacity: 1;
+}
+
+/* Responsive -------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .settings-nav {
+    width: 196px;
+  }
+
+  .settings-content {
+    padding: 36px 32px 48px;
+  }
+}
+
+@media (max-width: 720px) {
+  .settings {
+    flex-direction: column;
+  }
+
+  .settings-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: auto;
+    padding: 8px 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .settings-nav-title,
+  .settings-nav-footer {
+    display: none;
+  }
+
+  .settings-nav-group {
+    flex-direction: row;
+  }
+
+  .settings-nav-btn {
+    justify-content: center;
+  }
+
+  .settings-content {
+    min-height: 0;
+    overflow-y: auto;
+    padding: 28px 20px 40px;
+  }
+
+  .settings-row {
+    gap: 16px;
+  }
+}
+
+/* ==========================================================================
+   SETTINGS MODAL
+   The settings view is presented as a floating panel over the current view.
+   ========================================================================== */
+
+/* The titlebar sits above the backdrop so the window controls stay usable,
+   but it is dimmed with the same overlay so the whole window darkens. */
+body.settings-open .titlebar {
+  background: var(--bg-chrome);
+}
+
+.titlebar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background-color: transparent;
+  pointer-events: none;
+  transition: background-color 0.16s ease;
+  /*
+   * This is only a dimming layer. Electron inherits app-region into
+   * pseudo-elements, and because the layer spans the whole bar it would
+   * otherwise sit on top of the window buttons in the native hit test and
+   * swallow their clicks. "initial" keeps it neutral.
+   */
+  -webkit-app-region: initial;
+}
+
+body.settings-open .titlebar::after {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.settings-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 48px;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+
+.settings-backdrop.is-visible {
+  opacity: 1;
+}
+
+.settings-panel {
+  position: relative;
+  display: block;
+  width: min(960px, 100%);
+  height: min(600px, 100%);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--bg-panel);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transform: translateY(8px) scale(0.985);
+  transition: transform 0.18s var(--ease);
+  outline: none;
+}
+
+.settings-backdrop.is-visible .settings-panel {
+  transform: none;
+}
+
+.settings-panel .settings {
+  height: 100%;
+}
+
+.settings-panel .settings-nav {
+  padding-top: 26px;
+}
+
+.settings-panel .settings-content {
+  margin: 14px 0;
+  padding: 28px 40px 34px 48px;
+  scrollbar-gutter: stable;
+}
+
+.settings-content:hover {
+  scrollbar-color: var(--scroll-thumb-hover) transparent;
+}
+
+.settings-panel .settings-content-inner {
+  max-width: 760px;
+}
+
+.settings-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.settings-close:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.settings-close .icon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 900px) {
+  .settings-backdrop {
+    padding: 20px 24px;
+  }
+}
+
+@media (max-width: 720px) {
+  .settings-backdrop {
+    padding: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .settings-backdrop,
+  .settings-panel {
+    transition: none;
+  }
+}
+
+

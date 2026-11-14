@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "defaultModel": "nvidia:nemotron-3.5-embed-1b",
+  "models": [
+    {
+      "id": "nvidia:nemotron-3.5-embed-1b",
+      "provider": "nvidia",
+      "model": "nvidia/nemotron-3.5-embed-1b",
+      "name": "Nemotron 3.5 Embed 1B",
+      "description": "Multimodal retrieval embeddings for text and document images",
+      "baseUrl": "https://integrate.api.nvidia.com/v1",
+      "apiKeyEnv": "NVIDIA_API_KEY",
+      "dimensions": 2048,
+      "maxInputTokens": 10240,
+      "modalities": ["text", "image"],
+      "request": {
+        "encoding_format": "float",
+        "truncate": "NONE",
+        "modality": "text"
+      }
+    }
+  ]
+}

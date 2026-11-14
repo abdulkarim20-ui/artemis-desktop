@@ -1,0 +1,288 @@
+/* Saved chats under the New Chat button. Uses only the shared tokens, so it
+ * follows the light/dark theme with no extra rules. */
+.history {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+  /* Keep the history's flex space for the footer; collapsed mode shows only
+   * the compact search control when one is available. */
+  transition: opacity 0.15s var(--ease);
+}
+.sidebar:not([data-expanded="true"]) .history {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.sidebar:not([data-expanded="true"]) .history-search-wrap { display: none; }
+.sidebar:not([data-expanded="true"]) .history-search-collapsed { display: flex; }
+.sidebar:not([data-expanded="true"]) .history-scroll { display: none; }
+/* The history takes the free space; the spacer must not also claim half. */
+.history ~ .nav-spacer { flex: 0; }
+.history-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  padding-bottom: 8px;
+}
+.history-search-wrap {
+  position: relative;
+  flex: none;
+  display: block;
+  margin-bottom: 8px;
+}
+.history-search-collapsed {
+  display: none;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  padding: 0 7px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s var(--ease);
+}
+.history-search-collapsed .icon { width: 18px; height: 18px; flex: none; }
+.history-search-collapsed:hover { background: var(--hover); }
+.history-search-collapsed:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.history-search-wrap .icon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+  transition: color 0.15s var(--ease);
+}
+.history-search-wrap:focus-within .icon { color: var(--text); }
+.history-search {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 0 10px 0 34px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+.history-search::placeholder { color: var(--muted); }
+.history-search:hover { background: color-mix(in srgb, var(--text) 9%, transparent); }
+.history-search:focus,
+.history-search:focus-visible {
+  outline: none;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  border-color: color-mix(in srgb, var(--text) 24%, transparent);
+}
+.history-search::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+  background-color: var(--muted);
+  -webkit-mask: url("../../assets/icons/close.svg") center / contain no-repeat;
+}
+.history-search::-webkit-search-cancel-button:hover { background-color: var(--text); }
+.history-group + .history-group { margin-top: 10px; }
+.history-group-title {
+  margin: 0;
+  padding: 4px 8px 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.history-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+}
+.history-row:hover,
+.history-row:focus-within { background: var(--hover); }
+.history-row[aria-current="true"] { background: var(--active); }
+.history-row.is-renaming,
+.history-row.is-renaming:hover { background: transparent; }
+.history-open {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 32px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  text-align: left;
+  cursor: pointer;
+}
+.history-open::before {
+  content: "•";
+  flex: none;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1;
+}
+.history-row[aria-current="true"] .history-open::before { color: var(--text); }
+.history-open:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.history-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Tools sit over the end of the title and fade in on hover or focus. */
+.history-tools {
+  position: absolute;
+  right: 2px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  padding-left: 18px;
+  border-radius: 0 8px 8px 0;
+  background: linear-gradient(to right, transparent, var(--hover) 14px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s var(--ease);
+}
+.history-row[aria-current="true"] .history-tools {
+  background: linear-gradient(to right, transparent, var(--active) 14px);
+}
+.history-row:hover .history-tools,
+.history-row:focus-within .history-tools,
+.history-row[data-confirm] .history-tools {
+  opacity: 1;
+  pointer-events: auto;
+}
+.history-tool {
+  display: grid;
+  place-items: center;
+  min-width: 26px;
+
+  height: 26px;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--icon);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.history-tool:hover { color: var(--icon-hover); background: var(--active); }
+.history-tool:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.history-tool .icon { width: 15px; height: 15px; }
+.history-tool--delete:hover { color: var(--palette-danger); }
+.history-row[data-confirm] .history-tool--delete { color: var(--palette-danger); }
+.history-row.is-renaming .history-tools { display: none; }
+.history-rename {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  margin: 0;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--text) 28%, transparent);
+  border-radius: 8px;
+  background: var(--bg-panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 13.5px;
+  outline: none;
+  user-select: text;
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+.history-rename:focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus) 22%, transparent);
+}
+.history-rename::selection {
+  background: color-mix(in srgb, var(--focus) 45%, transparent);
+  color: var(--text);
+}
+.history-note {
+  margin: 6px 8px;
+
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+.history-note.history-error { color: var(--palette-danger); }
+.history-retry {
+  margin: 0 8px;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.history-retry:hover { background: var(--hover); }
+
+@media (prefers-reduced-motion: reduce) {
+  .history, .history-tools { transition: none; }
+}
+
+/* Search chats: same outlined look as the New Chat button above it. */
+.history-search-wrap { margin-bottom: 8px; }
+
+.history-search-wrap .icon {
+  left: 7px;
+  flex: none;
+  color: var(--text);
+}
+
+.history-search {
+  height: 36px;
+  padding: 0 10px 0 32px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease);
+}
+
+.history-search::placeholder {
+  color: var(--text);
+  opacity: 1;
+}
+
+.history-search:hover {
+  background: var(--hover);
+}
+
+.history-search:focus,
+.history-search:focus-visible {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--text) 30%, var(--border));
+}
+
+.history-search:focus::placeholder,
+.history-search:focus-visible::placeholder {
+  color: var(--muted);
+}

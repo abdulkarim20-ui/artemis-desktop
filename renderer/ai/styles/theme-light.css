@@ -1,0 +1,526 @@
+/* ==========================================================================
+   LIGHT THEME OVERRIDES
+   The component library was originally dark-first. These rules keep every
+   surface, border, icon and syntax color legible on the light Artemis theme.
+   ========================================================================== */
+
+:root[data-theme="light"] {
+    color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   INPUT
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-input-card {
+    box-shadow: var(--ai-shadow-card);
+}
+
+:root[data-theme="light"] .ai-textarea {
+    scrollbar-color: var(--ai-scrollbar-thumb) transparent;
+}
+
+:root[data-theme="light"] .ai-textarea::-webkit-scrollbar-thumb {
+    background: var(--ai-scrollbar-thumb);
+}
+
+:root[data-theme="light"] .ai-textarea::-webkit-scrollbar-thumb:hover {
+    background: var(--ai-scrollbar-thumb-hover);
+}
+
+:root[data-theme="light"] .ai-send-btn,
+:root[data-theme="light"] .ai-send-btn.ai-send-btn-curved {
+    background-color: var(--ai-send-bg);
+    color: var(--ai-send-fg);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="light"] .ai-send-btn:hover,
+:root[data-theme="light"] .ai-send-btn.ai-send-btn-curved:hover {
+    background-color: var(--ai-send-bg-hover);
+}
+
+:root[data-theme="light"] .ai-btn-icon:hover {
+    color: var(--ai-text-primary);
+    background: var(--ai-bg-pill-active);
+}
+
+:root[data-theme="light"] .ai-dropdown-menu {
+    background-color: var(--ai-bg-dropdown);
+    box-shadow: var(--ai-shadow-popup);
+}
+
+:root[data-theme="light"] .ai-dropdown-menu::-webkit-scrollbar-thumb {
+    background: var(--ai-scrollbar-thumb);
+}
+
+:root[data-theme="light"] .ai-dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: var(--ai-scrollbar-thumb-hover);
+}
+
+:root[data-theme="light"] .ai-dropdown-item:hover {
+    background: var(--ai-bg-surface-hover);
+}
+
+:root[data-theme="light"] .ai-menu-left {
+    color: var(--ai-text-primary);
+}
+
+:root[data-theme="light"] .ai-menu-left .ai-menu-icon {
+    color: inherit;
+}
+
+:root[data-theme="light"] .ai-dropdown-item:hover .ai-menu-left .ai-menu-icon {
+    color: var(--ai-text-primary);
+}
+
+:root[data-theme="light"] .ai-menu-right-text {
+    color: var(--ai-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   CHAT
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-user-bubble {
+    background: var(--ai-user-bubble-bg);
+    color: var(--ai-text-primary);
+    border: 1px solid var(--palette-ink);
+    box-shadow: none;
+}
+
+:root[data-theme="light"] .ai-response-message,
+:root[data-theme="light"] .ai-markdown {
+    color: var(--ai-text-response);
+}
+
+:root[data-theme="light"] .ai-markdown strong,
+:root[data-theme="light"] .ai-markdown h1,
+:root[data-theme="light"] .ai-markdown h2,
+:root[data-theme="light"] .ai-markdown h3,
+:root[data-theme="light"] .ai-markdown h4,
+:root[data-theme="light"] .ai-markdown h5,
+:root[data-theme="light"] .ai-markdown h6 {
+    color: var(--md-text-bright);
+}
+
+:root[data-theme="light"] .ai-user-img-cell {
+    background: var(--ai-bg-surface-active);
+}
+
+:root[data-theme="light"] .ai-user-attachment-doc {
+    background: var(--ai-bg-surface);
+    border-color: var(--ai-border-hover);
+}
+
+:root[data-theme="light"] .ai-user-attachment-doc:hover {
+    border-color: rgba(0, 0, 0, 0.32);
+}
+
+:root[data-theme="light"] .ai-user-attachment-more .ai-doc-icon {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="light"] .ai-image-modal-backdrop {
+    background: var(--ai-modal-backdrop);
+}
+
+/* --------------------------------------------------------------------------
+   MARKDOWN
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-markdown {
+    --md-bg: var(--palette-snow);
+    --md-bg-raised: var(--palette-paper);
+    --md-bg-elevated: var(--palette-snow);
+    --md-bg-code: var(--palette-paper);
+    --md-border: color-mix(in srgb, var(--palette-warm-grey) 16%, transparent);
+    --md-border-strong: color-mix(in srgb, var(--palette-warm-grey) 26%, transparent);
+    --md-border-hover: color-mix(in srgb, var(--palette-warm-grey) 40%, transparent);
+
+    --md-text: var(--palette-ink);
+    --md-text-strong: var(--palette-ink);
+    --md-text-bright: var(--palette-ink);
+    --md-text-secondary: var(--palette-warm-grey);
+    --md-text-muted: var(--palette-warm-grey);
+    --md-text-faint: color-mix(in srgb, var(--palette-warm-grey) 72%, var(--palette-paper));
+
+    --md-info: color-mix(in srgb, var(--palette-source-blue) 70%, var(--palette-ink));
+    --md-info-bright: var(--palette-rose);
+    --md-info-bg: color-mix(in srgb, var(--palette-source-blue) 12%, transparent);
+    --md-info-border: color-mix(in srgb, var(--palette-source-blue) 32%, transparent);
+
+    --md-brand: var(--palette-rose);
+    --md-brand-bright: var(--palette-deep-coral);
+    --md-brand-bg: color-mix(in srgb, var(--palette-rose) 10%, transparent);
+    --md-brand-border: color-mix(in srgb, var(--palette-rose) 30%, transparent);
+
+    --md-success: color-mix(in srgb, var(--palette-success) 64%, var(--palette-ink));
+    --md-success-bright: var(--md-success);
+    --md-success-bg: color-mix(in srgb, var(--palette-success) 12%, transparent);
+    --md-success-border: color-mix(in srgb, var(--palette-success) 32%, transparent);
+
+    --md-warning: color-mix(in srgb, var(--palette-warning) 72%, var(--palette-ink));
+    --md-warning-bright: var(--md-warning);
+    --md-warning-bg: color-mix(in srgb, var(--palette-warning) 12%, transparent);
+    --md-warning-border: color-mix(in srgb, var(--palette-warning) 32%, transparent);
+
+    --md-danger: color-mix(in srgb, var(--palette-danger) 72%, var(--palette-ink));
+    --md-danger-bright: var(--md-danger);
+    --md-danger-bg: color-mix(in srgb, var(--palette-danger) 12%, transparent);
+    --md-danger-border: color-mix(in srgb, var(--palette-danger) 32%, transparent);
+
+    --md-important: var(--palette-rose);
+    --md-important-bright: var(--palette-deep-coral);
+    --md-important-bg: var(--md-brand-bg);
+    --md-important-border: var(--md-brand-border);
+
+    --md-attention: var(--md-warning);
+    --md-attention-bright: var(--md-warning);
+    --md-attention-bg: var(--md-warning-bg);
+    --md-attention-border: var(--md-warning-border);
+
+    --md-code-text: #24292f;
+    --md-syntax-comment: #6e7781;
+    --md-syntax-keyword: #cf222e;
+    --md-syntax-string: #0a3069;
+    --md-syntax-number: #0550ae;
+    --md-syntax-function: #8250df;
+    --md-syntax-class: #953800;
+    --md-syntax-variable: #953800;
+    --md-syntax-operator: #0550ae;
+    --md-syntax-property: #0550ae;
+    --md-syntax-tag: #116329;
+    --md-syntax-attribute: #0550ae;
+    --md-syntax-regex: #0a3069;
+    --md-syntax-builtin: #0550ae;
+    --md-syntax-meta: #6e7781;
+
+    --md-diff-add: var(--md-success);
+    --md-diff-add-bg: var(--md-success-bg);
+    --md-diff-remove: var(--md-danger);
+    --md-diff-remove-bg: var(--md-danger-bg);
+}
+
+:root[data-theme="light"] .ai-markdown em {
+    color: var(--md-text-secondary);
+}
+
+:root[data-theme="light"] .ai-markdown hr {
+    background: linear-gradient(90deg, transparent, var(--md-border-strong), transparent);
+}
+
+:root[data-theme="light"] .ai-markdown a {
+    color: var(--palette-rose);
+    text-decoration-color: color-mix(in srgb, var(--palette-rose) 45%, transparent);
+}
+
+:root[data-theme="light"] .ai-markdown a:hover {
+    color: var(--palette-deep-coral);
+    text-decoration-color: var(--palette-deep-coral);
+}
+
+:root[data-theme="light"] .ai-markdown a:focus-visible {
+    outline-color: color-mix(in srgb, var(--palette-rose) 55%, transparent);
+}
+
+:root[data-theme="light"] .ai-markdown :not(pre) > code {
+    color: var(--md-code-text);
+    background: var(--ai-inline-code-bg);
+    border-color: var(--ai-inline-code-border);
+}
+
+:root[data-theme="light"] .ai-markdown kbd {
+    background: var(--md-bg-raised);
+    border-color: var(--md-border-strong);
+    box-shadow: 0 1px 0 var(--md-border), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-code-block {
+    background: var(--md-bg-code);
+    border: 1px solid var(--md-border);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-code-copy-btn,
+:root[data-theme="light"] .ai-markdown .ai-table-copy-btn {
+    color: var(--md-text-muted);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-code-copy-btn:hover,
+:root[data-theme="light"] .ai-markdown .ai-table-copy-btn:hover,
+:root[data-theme="light"] .ai-markdown .ai-table-copy-btn:focus-visible {
+    color: var(--md-text-bright);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-code-tooltip {
+    background: #24292f;
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-code-block pre::-webkit-scrollbar-thumb {
+    background: var(--ai-scrollbar-thumb);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-code-block pre code {
+    color: var(--md-code-text);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-code-block--diff {
+    border-color: var(--md-border);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-callout {
+    --callout-bg: var(--md-brand-bg);
+    --callout-border: var(--md-brand-border);
+    background: linear-gradient(90deg, var(--callout-bg), color-mix(in srgb, var(--palette-snow) 80%, transparent));
+    box-shadow: none;
+}
+
+:root[data-theme="light"] .ai-markdown .ai-callout--note {
+    --callout-color: var(--md-info);
+    --callout-title: var(--md-info);
+    --callout-bg: var(--md-info-bg);
+    --callout-border: var(--md-info-border);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-callout--tip {
+    --callout-color: var(--md-success);
+    --callout-title: var(--md-success);
+    --callout-bg: var(--md-success-bg);
+    --callout-border: var(--md-success-border);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-callout--important {
+    --callout-color: var(--md-important);
+    --callout-title: var(--md-important-bright);
+    --callout-bg: var(--md-important-bg);
+    --callout-border: var(--md-important-border);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-callout--warning {
+    --callout-color: var(--md-warning);
+    --callout-title: var(--md-warning);
+    --callout-bg: var(--md-warning-bg);
+    --callout-border: var(--md-warning-border);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-callout--caution {
+    --callout-color: var(--md-danger);
+    --callout-title: var(--md-danger-bright);
+    --callout-bg: var(--md-danger-bg);
+    --callout-border: var(--md-danger-border);
+}
+
+:root[data-theme="light"] .ai-markdown > blockquote,
+:root[data-theme="light"] .ai-markdown blockquote {
+    border-left-color: var(--md-border-strong);
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.035), transparent);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-table-wrap {
+    border-color: var(--md-border-strong);
+    background: rgba(0, 0, 0, 0.015);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-markdown-table th {
+    color: var(--md-text);
+    background: var(--md-bg-raised);
+    border-bottom-color: var(--md-border-strong);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-markdown-table td {
+    border-bottom-color: var(--md-border);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-markdown-table tbody tr:hover {
+    background: rgba(0, 0, 0, 0.025);
+}
+
+:root[data-theme="light"] .ai-markdown ul li::marker,
+:root[data-theme="light"] .ai-markdown ol li::marker {
+    color: var(--md-text-secondary);
+}
+
+:root[data-theme="light"] .ai-markdown input[type="checkbox"] {
+    background: var(--md-bg-raised);
+}
+
+:root[data-theme="light"] .ai-markdown li:has(> input[type="checkbox"]:checked) strong {
+    color: var(--md-text-muted);
+}
+
+:root[data-theme="light"] .ai-markdown .katex {
+    color: var(--md-text);
+}
+
+:root[data-theme="light"] .ai-markdown .katex-display {
+    border-color: var(--md-brand-border);
+    background: linear-gradient(100deg, var(--md-brand-bg), var(--md-info-bg));
+}
+
+:root[data-theme="light"] .ai-markdown .katex-display .katex {
+    color: var(--md-text);
+}
+
+:root[data-theme="light"] .ai-markdown .ai-markdown-image img {
+    border-color: var(--md-border);
+    background: var(--md-bg-raised);
+    box-shadow: 0 10px 28px rgba(20, 20, 24, 0.10);
+}
+
+:root[data-theme="light"] .ai-markdown * {
+    scrollbar-color: var(--ai-scrollbar-thumb) transparent;
+}
+
+:root[data-theme="light"] .ai-markdown *::-webkit-scrollbar-thumb {
+    background: var(--ai-scrollbar-thumb);
+}
+
+:root[data-theme="light"] .ai-markdown *::-webkit-scrollbar-thumb:hover {
+    background: var(--ai-scrollbar-thumb-hover);
+}
+
+/* --------------------------------------------------------------------------
+   MODEL SELECTOR
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-model-selector-menu {
+    background: var(--ai-bg-dropdown);
+    border-color: var(--ai-border);
+    box-shadow: var(--ai-shadow-popup);
+}
+
+:root[data-theme="light"] .ai-model-selector-title {
+    color: var(--ai-text-muted);
+}
+
+:root[data-theme="light"] .ai-model-selector-count {
+    background: var(--ai-bg-pill);
+    color: var(--ai-text-muted);
+}
+
+:root[data-theme="light"] .ai-model-selector-list::-webkit-scrollbar-thumb {
+    background-color: var(--ai-scrollbar-thumb);
+}
+
+:root[data-theme="light"] .ai-model-selector-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--ai-scrollbar-thumb-hover);
+}
+
+:root[data-theme="light"] .ai-model-option:hover {
+    background: var(--ai-bg-surface-hover);
+}
+
+:root[data-theme="light"] .ai-model-option.is-selected {
+    background: var(--ai-accent-subtle);
+}
+
+:root[data-theme="light"] .ai-model-option-description,
+:root[data-theme="light"] .ai-model-provider,
+:root[data-theme="light"] .ai-model-empty {
+    color: var(--ai-text-muted);
+}
+
+:root[data-theme="light"] .ai-model-option-arrow {
+    color: var(--ai-text-muted);
+}
+
+:root[data-theme="light"] .ai-model-option:hover .ai-model-option-arrow {
+    color: var(--ai-text-secondary);
+}
+
+:root[data-theme="light"] .ai-model-pill-badge {
+    background: var(--ai-bg-pill);
+    color: var(--ai-text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   THINKING / REASONING
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-thinking-sep {
+    color: var(--ai-text-muted);
+}
+
+:root[data-theme="light"] .ai-reasoning-content .ai-markdown strong {
+    color: var(--ai-text-primary);
+}
+
+:root[data-theme="light"] .ai-reasoning-content .ai-markdown em {
+    color: var(--ai-text-secondary);
+}
+
+:root[data-theme="light"] .ai-reasoning-content .ai-markdown code {
+    background: var(--ai-inline-code-bg);
+    color: var(--ai-text-primary);
+}
+
+:root[data-theme="light"] .ai-reasoning-content .ai-markdown pre {
+    background: var(--ai-bg-code) !important;
+    border-color: var(--ai-border) !important;
+}
+
+:root[data-theme="light"] .ai-reasoning-panel::-webkit-scrollbar-thumb {
+    background-color: var(--ai-scrollbar-thumb);
+}
+
+:root[data-theme="light"] .ai-reasoning-panel::-webkit-scrollbar-thumb:hover {
+    background-color: var(--ai-scrollbar-thumb-hover);
+}
+
+
+/* --------------------------------------------------------------------------
+   ATTACHMENTS
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-attachment-image-card {
+    background: var(--ai-bg-surface-active);
+    box-shadow: 0 4px 12px rgba(20, 20, 24, 0.12);
+}
+
+:root[data-theme="light"] .ai-attachment-image-card:hover {
+    box-shadow: 0 6px 16px rgba(20, 20, 24, 0.18);
+}
+
+:root[data-theme="light"] .ai-attachment-img {
+    border-color: var(--ai-border);
+}
+
+:root[data-theme="light"] .ai-attachment-tag {
+    background: rgba(0, 0, 0, 0.045);
+    border-color: var(--ai-border);
+}
+
+:root[data-theme="light"] .ai-attachment-tag:hover {
+    background: rgba(0, 0, 0, 0.075);
+    border-color: var(--ai-border-hover);
+}
+
+:root[data-theme="light"] .ai-attachment-remove:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+/* --------------------------------------------------------------------------
+   MESSAGE ACTIONS
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-action-btn:hover,
+:root[data-theme="light"] .ai-user-action-btn:hover {
+    background: var(--ai-bg-surface-hover);
+}
+
+/* --------------------------------------------------------------------------
+   IMAGE LIGHTBOX
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="light"] .ai-image-modal-img-wrap {
+    background: var(--ai-bg-surface);
+    box-shadow: 0 20px 60px rgba(20, 20, 24, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+:root[data-theme="light"] .ai-image-modal-caption {
+    color: var(--ai-text-secondary);
+}

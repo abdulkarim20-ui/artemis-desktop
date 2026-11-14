@@ -1,0 +1,97 @@
+/* ==========================================================================
+   USER MESSAGE ACTIONS STYLES (components/message-actions/user-message-actions.css)
+   Relative timestamp + copy action for user messages
+   ========================================================================== */
+
+.ai-user-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-width: 84%;
+}
+
+.ai-user-message .ai-user-bubble {
+    max-width: 100%;
+}
+
+.ai-user-actions-mount {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.ai-user-message-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    padding-top: 2px;
+    padding-right: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    user-select: none;
+}
+
+/* Reveal on hover OR on the latest user message */
+.ai-msg-row.user:hover .ai-user-message-actions,
+.ai-msg-row.user:last-child .ai-user-message-actions,
+.ai-msg-row.user:focus-within .ai-user-message-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Relative Timestamp text - Perfectly match assistant */
+.ai-user-action-time {
+    font-size: 12px;
+    font-family: var(--ai-font-sans, 'Inter', sans-serif);
+    font-weight: 400;
+    color: var(--ai-action-icon, #9c9b98);
+    user-select: none;
+    letter-spacing: 0;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* Action Icon Buttons Group */
+.ai-user-action-buttons {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Button sizing and color exactly matching assistant */
+.ai-user-action-btn {
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ai-action-icon, #9c9b98);
+    cursor: pointer;
+    transition: color var(--ai-transition-fast, 0.15s ease), background var(--ai-transition-fast, 0.15s ease), transform var(--ai-transition-fast, 0.15s ease);
+}
+
+.ai-user-action-btn:hover {
+    color: var(--ai-action-icon-hover, #f0efec);
+    background: var(--ai-bg-surface-hover, rgba(255, 255, 255, 0.08));
+}
+
+.ai-user-action-btn:active {
+    transform: scale(0.92);
+}
+
+.ai-user-action-btn .icon {
+    width: 15px;
+    height: 15px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.ai-user-action-btn.is-copied {
+    color: var(--palette-success);
+}

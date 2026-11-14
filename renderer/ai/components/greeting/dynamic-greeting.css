@@ -1,0 +1,20 @@
+/**
+ * ============================================================================
+ * DYNAMIC GREETING STYLES (components/greeting/dynamic-greeting.css)
+ * ============================================================================
+ */
+
+.ai-header-title {
+    display: block;
+    text-align: center;
+    transition: opacity 140ms ease;
+    opacity: 1;
+}
+
+.ai-header-title.ai-greeting-changing {
+    opacity: 0;
+}
+
+.greeting__text {
+    display: inline;
+}

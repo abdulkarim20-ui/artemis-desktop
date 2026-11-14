@@ -1,0 +1,25 @@
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg-chrome);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+button { font: inherit; color: inherit; }
+button:focus:not(:focus-visible) { outline: none; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+.app { display: flex; flex-direction: column; height: 100%; }
+.body { flex: 1; display: flex; min-height: 0; }
+
+/* Default for every scrollable area; components can override these colours. */
+:root {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) transparent;
+}

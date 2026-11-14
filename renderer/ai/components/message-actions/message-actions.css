@@ -1,0 +1,81 @@
+/* ==========================================================================
+   MESSAGE ACTIONS COMPONENT STYLES (components/message-actions/message-actions.css)
+   Copy action and relative timestamp for assistant messages
+   ========================================================================== */
+
+/* Assistant Message Action Bar Footer (Hidden by default on older messages) */
+.ai-msg-row.assistant .ai-msg-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 2px;
+    user-select: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+}
+
+/* Reveal on hover OR on the absolute last message in the chat */
+.ai-msg-row.assistant:hover .ai-msg-footer,
+.ai-msg-row.assistant:last-child .ai-msg-footer {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Action icons row + time */
+.ai-action-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Minimalist Icon Action Buttons (Identical to User Message Actions) */
+.ai-action-btn {
+    width: 26px;
+    height: 26px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--ai-action-icon, #9c9b98);
+    cursor: pointer;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--ai-transition-fast, 0.15s ease), background var(--ai-transition-fast, 0.15s ease), transform var(--ai-transition-fast, 0.15s ease);
+}
+
+.ai-action-btn:hover {
+    color: var(--ai-action-icon-hover, #f0efec);
+    background: var(--ai-bg-surface-hover, rgba(255, 255, 255, 0.08));
+}
+
+.ai-action-btn:active {
+    transform: scale(0.92);
+}
+
+.ai-action-btn .icon {
+    width: 15px;
+    height: 15px;
+    display: block;
+    flex-shrink: 0;
+}
+
+/* Copied Feedback State */
+.ai-action-btn.copied-success {
+    color: var(--palette-success) !important;
+}
+
+/* Relative Timestamp matching user action bar */
+.ai-msg-time {
+    font-size: 12px;
+    font-family: var(--ai-font-sans, 'Inter', sans-serif);
+    font-weight: 400;
+    color: var(--ai-action-icon, #9c9b98);
+    margin-left: 10px;
+    white-space: nowrap;
+    letter-spacing: 0;
+    line-height: 1;
+    user-select: none;
+}

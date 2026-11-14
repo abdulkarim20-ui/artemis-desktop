@@ -1,0 +1,1006 @@
+/**
+ * ============================================================================
+ * MODULAR AI MARKDOWN RENDERER & SEMANTIC COLOR ENGINE
+ * (components/markdown/markdown.css)
+ * ============================================================================
+ * One unified, token-based color system for:
+ * - Prose & Headings hierarchy
+ * - Interactive Links
+ * - Inline Code & IDE Code Blocks
+ * - Highlight.js Smart Syntax Highlighting
+ * - GitHub-Style Semantic Callouts (Note, Tip, Important, Warning, Caution)
+ * - Tables, Blockquotes, Diffs, Task Lists & KaTeX Math
+ * ============================================================================
+ */
+
+.ai-markdown {
+    /* ------------------------------------------------------------------------
+       SURFACES & CONTAINERS
+       ------------------------------------------------------------------------ */
+    --md-bg: var(--palette-night);
+    --md-bg-raised: var(--palette-panel);
+    --md-bg-elevated: var(--palette-line);
+    --md-bg-code: var(--palette-night);
+    --md-border: color-mix(in srgb, var(--palette-muted) 16%, transparent);
+    --md-border-strong: color-mix(in srgb, var(--palette-muted) 28%, transparent);
+    --md-border-hover: color-mix(in srgb, var(--palette-muted) 42%, transparent);
+
+    /* ------------------------------------------------------------------------
+       TYPOGRAPHY
+       ------------------------------------------------------------------------ */
+    --md-text: var(--palette-snow);
+    --md-text-strong: var(--palette-snow);
+    --md-text-bright: var(--palette-snow);
+    --md-text-secondary: var(--palette-muted);
+    --md-text-muted: var(--palette-muted);
+    --md-text-faint: color-mix(in srgb, var(--palette-muted) 72%, var(--palette-night));
+
+    /* ------------------------------------------------------------------------
+       SEMANTIC ACCENTS
+       ------------------------------------------------------------------------ */
+    /* Information and source citations */
+    --md-info: var(--palette-source-blue);
+    --md-info-bright: var(--palette-source-blue);
+    --md-info-bg: color-mix(in srgb, var(--palette-source-blue) 10%, transparent);
+    --md-info-border: color-mix(in srgb, var(--palette-source-blue) 34%, transparent);
+
+    /* Brand and interactive elements */
+    --md-brand: var(--ai-accent);
+    --md-brand-bright: var(--ai-accent-hover);
+    --md-brand-bg: var(--ai-accent-subtle);
+    --md-brand-border: color-mix(in srgb, var(--ai-accent) 32%, transparent);
+
+    /* Success */
+    --md-success: var(--palette-success);
+    --md-success-bright: var(--palette-success);
+    --md-success-bg: color-mix(in srgb, var(--palette-success) 10%, transparent);
+    --md-success-border: color-mix(in srgb, var(--palette-success) 34%, transparent);
+
+    /* Warning */
+    --md-warning: var(--palette-warning);
+    --md-warning-bright: var(--palette-warning);
+    --md-warning-bg: color-mix(in srgb, var(--palette-warning) 10%, transparent);
+    --md-warning-border: color-mix(in srgb, var(--palette-warning) 34%, transparent);
+
+    /* Danger */
+    --md-danger: var(--palette-danger);
+    --md-danger-bright: var(--palette-danger);
+    --md-danger-bg: color-mix(in srgb, var(--palette-danger) 10%, transparent);
+    --md-danger-border: color-mix(in srgb, var(--palette-danger) 34%, transparent);
+
+    /* Important */
+    --md-important: var(--ai-accent);
+    --md-important-bright: var(--ai-accent-hover);
+    --md-important-bg: var(--ai-accent-subtle);
+    --md-important-border: color-mix(in srgb, var(--ai-accent) 34%, transparent);
+
+    /* Attention */
+    --md-attention: var(--palette-warning);
+    --md-attention-bright: var(--palette-warning);
+    --md-attention-bg: var(--md-warning-bg);
+    --md-attention-border: var(--md-warning-border);
+
+    /* ------------------------------------------------------------------------
+       CODE SYNTAX PALETTE (VS Code / JetBrains Grade)
+       ------------------------------------------------------------------------ */
+    --md-code-text: #d8dbe2;
+    --md-syntax-comment: #697386;
+    --md-syntax-keyword: #c084fc;
+    --md-syntax-string: #86efac;
+    --md-syntax-number: #fbbf24;
+    --md-syntax-function: #67e8f9;
+    --md-syntax-class: #93c5fd;
+    --md-syntax-variable: #f9a8d4;
+    --md-syntax-operator: #c4b5fd;
+    --md-syntax-property: #7dd3fc;
+    --md-syntax-tag: #60a5fa;
+    --md-syntax-attribute: #f0abfc;
+    --md-syntax-regex: #fb923c;
+    --md-syntax-builtin: #5eead4;
+    --md-syntax-meta: #94a3b8;
+
+    /* ------------------------------------------------------------------------
+       DIFF & PATCH
+       ------------------------------------------------------------------------ */
+    --md-diff-add: var(--palette-success);
+    --md-diff-add-bg: color-mix(in srgb, var(--palette-success) 12%, transparent);
+    --md-diff-remove: var(--palette-danger);
+    --md-diff-remove-bg: color-mix(in srgb, var(--palette-danger) 12%, transparent);
+
+    /* ------------------------------------------------------------------------
+       LAYOUT & TYPOGRAPHY FOUNDATION
+       ------------------------------------------------------------------------ */
+    font-family: var(--ai-font-response, 'Crimson Pro', Georgia, serif);
+    color: var(--md-text);
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+    word-break: break-word;
+    padding: 0 32px 0 4px;
+}
+
+.ai-markdown > *:first-child { margin-top: 0; }
+.ai-markdown > *:last-child { margin-bottom: 0; }
+
+/* ==========================================================================
+   PROSE HIERARCHY
+   ========================================================================== */
+
+.ai-markdown p {
+    color: var(--md-text);
+    margin: 0 0 14px;
+}
+
+.ai-markdown strong {
+    color: var(--md-text-bright);
+    font-weight: 650;
+}
+
+.ai-markdown em {
+    color: #d7d9df;
+    font-style: italic;
+}
+
+.ai-markdown del,
+.ai-markdown s {
+    color: var(--md-text-muted);
+    text-decoration: line-through;
+}
+
+/* Headings */
+.ai-markdown h1,
+.ai-markdown h2,
+.ai-markdown h3,
+.ai-markdown h4,
+.ai-markdown h5,
+.ai-markdown h6 {
+    font-family: var(--ai-font-response, 'Crimson Pro', Georgia, serif);
+    color: var(--md-text-strong);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    margin: 22px 0 10px;
+}
+
+.ai-markdown h1 { font-size: 1.58rem; font-weight: 700; }
+.ai-markdown h2 { font-size: 1.34rem; font-weight: 680; }
+.ai-markdown h3 { font-size: 1.16rem; font-weight: 650; }
+.ai-markdown h4 { font-size: 1.04rem; font-weight: 650; }
+.ai-markdown h5,
+.ai-markdown h6 { font-size: 0.98rem; font-weight: 650; }
+
+/* Horizontal Divider */
+.ai-markdown hr {
+    height: 1px;
+    border: 0;
+    margin: 26px 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+}
+
+/* ==========================================================================
+   LINKS
+   ========================================================================== */
+
+.ai-markdown a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 3.5px;
+    color: #5f8afa;
+    font-weight: 500;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgba(95, 138, 250, 0.45);
+    text-underline-offset: 3px;
+    transition: color 160ms ease, text-decoration-color 160ms ease;
+    vertical-align: baseline;
+}
+
+.ai-markdown a:hover {
+    color: #8bb1ff;
+    text-decoration-color: #8bb1ff;
+}
+
+.ai-markdown a .ai-link-icon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    vertical-align: -1px;
+    opacity: 0.85;
+    transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.ai-markdown a:hover .ai-link-icon {
+    opacity: 1;
+    transform: translate(1px, -1px);
+}
+
+.ai-markdown a:focus-visible {
+    outline: 2px solid rgba(95, 138, 250, 0.55);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* ==========================================================================
+   INLINE CODE
+   ========================================================================== */
+
+.ai-markdown :not(pre) > code {
+    display: inline;
+    padding: 1.5px 5px;
+    margin: 0 1.5px;
+    color: #e4e4e7;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 4px;
+    font-family: var(--ai-font-mono, "JetBrains Mono", "SFMono-Regular", Consolas, monospace);
+    font-size: .84em;
+    font-weight: 500;
+    vertical-align: 0;
+}
+
+.ai-markdown kbd {
+    display: inline-block;
+    padding: 2px 7px;
+    font: 500 .8em/1.2 var(--ai-font-mono, monospace);
+    color: var(--md-text);
+    background: #222226;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================================================
+   CODE BLOCK CONTAINER & HEADER (Borderless #212121 Card with Floating Sticky Copy Button)
+   ========================================================================== */
+
+.ai-markdown .ai-code-block {
+    position: relative;
+    background: #212121;
+    border: none;
+    border-radius: var(--ai-radius-lg, 16px);
+    margin: 18px 0;
+    overflow: visible;
+}
+
+.ai-markdown .ai-code-block-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px 6px 18px;
+    background: transparent;
+    border: none;
+}
+
+.ai-markdown .ai-code-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    line-height: 1;
+}
+
+.ai-markdown .ai-code-glyph,
+.ai-markdown .icon.icon-sm {
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--ai-brand-accent, var(--palette-coral));
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+}
+
+.ai-markdown .ai-code-lang {
+    display: inline-block;
+    vertical-align: middle;
+    color: var(--ai-text-primary, #ffffff);
+    font: 600 0.92rem/1 var(--ai-font-sans, 'Inter', sans-serif);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    letter-spacing: -0.2px;
+}
+
+.ai-markdown .ai-code-type {
+    color: var(--ai-text-muted, #71717a);
+    font: 0.75rem/1 var(--ai-font-mono, monospace);
+}
+
+/* Floating copy button (compact 26px, 15px icon) */
+.ai-markdown .ai-code-copy-btn {
+    position: sticky;
+    top: 8px;
+    float: right;
+    margin-top: -28px;
+    margin-right: 14px;
+    margin-bottom: 0;
+    z-index: 15;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    box-shadow: none;
+    color: #ffffff;
+    opacity: 0.65;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.ai-markdown .ai-code-copy-btn:hover {
+    color: #ffffff;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.ai-markdown .ai-code-copy-btn:active {
+    transform: scale(0.92);
+}
+
+.ai-markdown .ai-code-copy-btn.copied {
+    color: var(--palette-success);
+    opacity: 1;
+    background: color-mix(in srgb, var(--palette-success) 16%, transparent);
+}
+
+.ai-markdown .ai-code-copy-btn .icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.ai-markdown .ai-code-copy-btn .ai-icon-copy { display: block; }
+.ai-markdown .ai-code-copy-btn .ai-icon-check { display: none; }
+.ai-markdown .ai-code-copy-btn.copied .ai-icon-copy { display: none; }
+.ai-markdown .ai-code-copy-btn.copied .ai-icon-check { display: block; }
+
+/* Compact tooltip */
+.ai-markdown .ai-code-tooltip {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: #18181a;
+    color: #ffffff;
+    font-family: var(--ai-font-sans, 'Inter', sans-serif);
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-3px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+    z-index: 25;
+}
+
+.ai-markdown .ai-code-copy-btn:hover .ai-code-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ai-markdown .ai-code-block pre {
+    margin: 0;
+    padding: 6px 18px 18px 18px;
+    overflow-x: auto;
+    background: transparent;
+    border: none;
+    border-radius: 0 0 16px 16px;
+    clear: both;
+}
+
+.ai-markdown .ai-code-block pre::-webkit-scrollbar {
+    height: 7px;
+}
+
+.ai-markdown .ai-code-block pre::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 5px;
+}
+
+.ai-markdown .ai-code-block pre code {
+    display: block;
+    min-width: max-content;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #e4e4e7;
+    font: 400 0.88rem/1.65 var(--ai-font-mono, 'JetBrains Mono', monospace);
+    white-space: pre;
+}
+
+/* ==========================================================================
+   HIGHLIGHT.JS — SMART SYNTAX PALETTE
+   ========================================================================== */
+
+/* Comments */
+.ai-markdown .hljs-comment,
+.ai-markdown .hljs-quote,
+.ai-markdown .hljs-doctag {
+    color: var(--md-syntax-comment);
+    font-style: italic;
+}
+
+/* Keywords */
+.ai-markdown .hljs-keyword,
+.ai-markdown .hljs-selector-tag,
+.ai-markdown .hljs-literal,
+.ai-markdown .hljs-type,
+.ai-markdown .hljs-built_in {
+    color: var(--md-syntax-keyword);
+}
+
+/* Strings */
+.ai-markdown .hljs-string,
+.ai-markdown .hljs-regexp,
+.ai-markdown .hljs-addition {
+    color: var(--md-syntax-string);
+}
+
+/* Numbers */
+.ai-markdown .hljs-number {
+    color: var(--md-syntax-number);
+}
+
+/* Functions */
+.ai-markdown .hljs-title.function_,
+.ai-markdown .hljs-title.function,
+.ai-markdown .hljs-function .hljs-title {
+    color: var(--md-syntax-function);
+}
+
+/* Classes */
+.ai-markdown .hljs-title.class_,
+.ai-markdown .hljs-title.class,
+.ai-markdown .hljs-class .hljs-title {
+    color: var(--md-syntax-class);
+}
+
+/* Variables */
+.ai-markdown .hljs-variable,
+.ai-markdown .hljs-template-variable {
+    color: var(--md-syntax-variable);
+}
+
+/* Operators */
+.ai-markdown .hljs-operator {
+    color: var(--md-syntax-operator);
+}
+
+/* Properties & Attributes */
+.ai-markdown .hljs-attr,
+.ai-markdown .hljs-attribute,
+.ai-markdown .hljs-property {
+    color: var(--md-syntax-property);
+}
+
+/* Tags */
+.ai-markdown .hljs-tag,
+.ai-markdown .hljs-name {
+    color: var(--md-syntax-tag);
+}
+
+/* Regex */
+.ai-markdown .hljs-regexp {
+    color: var(--md-syntax-regex);
+}
+
+/* Meta */
+.ai-markdown .hljs-meta,
+.ai-markdown .hljs-meta-keyword {
+    color: var(--md-syntax-meta);
+}
+
+/* Deleted */
+.ai-markdown .hljs-deletion {
+    color: var(--md-diff-remove);
+}
+
+/* ==========================================================================
+   DIFF / PATCH BLOCKS
+   ========================================================================== */
+
+.ai-markdown .ai-code-block--diff {
+    border-color: rgba(255, 255, 255, 0.10);
+}
+
+.ai-markdown .ai-code-block--diff .hljs-addition {
+    display: inline;
+    color: var(--md-diff-add);
+    background: var(--md-diff-add-bg);
+}
+
+.ai-markdown .ai-code-block--diff .hljs-deletion {
+    display: inline;
+    color: var(--md-diff-remove);
+    background: var(--md-diff-remove-bg);
+}
+
+.ai-markdown .ai-code-block--diff .hljs-meta {
+    color: var(--md-brand);
+}
+
+/* ==========================================================================
+   SMART CALLOUT / GITHUB ALERT SYSTEM
+   ========================================================================== */
+
+.ai-markdown .ai-callout {
+    --callout-color: var(--md-brand);
+    --callout-title: var(--md-brand-bright);
+    --callout-bg: rgba(75, 166, 255, 0.055);
+    --callout-border: rgba(75, 166, 255, 0.28);
+    position: relative;
+    display: block;
+    margin: 18px 0;
+    padding: 12px 16px 13px 16px;
+    border: 1px solid var(--callout-border);
+    border-left: 3px solid var(--callout-color);
+    border-radius: 8px;
+    background: linear-gradient(90deg, var(--callout-bg), rgba(255, 255, 255, 0.012));
+    color: var(--md-text);
+    box-sizing: border-box;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.018);
+}
+
+.ai-markdown .ai-callout-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0 0 6px;
+    color: var(--callout-title);
+    font-family: var(--ai-font-sans, Inter, system-ui, sans-serif);
+    font-size: 0.76rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+}
+
+.ai-markdown .ai-callout-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 17px;
+    height: 17px;
+    color: var(--callout-color);
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+    flex: 0 0 17px;
+}
+
+.ai-markdown .ai-callout-label {
+    color: var(--callout-title);
+}
+
+.ai-markdown .ai-callout-body {
+    color: var(--md-text);
+    line-height: 1.6;
+}
+
+.ai-markdown .ai-callout-body > :first-child {
+    margin-top: 0 !important;
+}
+
+.ai-markdown .ai-callout-body > :last-child {
+    margin-bottom: 0 !important;
+}
+
+/* ==========================================================================
+   NOTE — BLUE
+   ========================================================================== */
+.ai-markdown .ai-callout--note {
+    --callout-color: var(--md-info);
+    --callout-title: var(--md-info);
+    --callout-bg: var(--md-info-bg);
+    --callout-border: var(--md-info-border);
+}
+
+/* ==========================================================================
+   TIP — GREEN
+   ========================================================================== */
+.ai-markdown .ai-callout--tip {
+    --callout-color: var(--md-success);
+    --callout-title: var(--md-success);
+    --callout-bg: var(--md-success-bg);
+    --callout-border: var(--md-success-border);
+}
+
+/* ==========================================================================
+   IMPORTANT — PURPLE
+   ========================================================================== */
+.ai-markdown .ai-callout--important {
+    --callout-color: var(--md-important);
+    --callout-title: var(--md-important-bright);
+    --callout-bg: var(--md-important-bg);
+    --callout-border: var(--md-important-border);
+}
+
+/* ==========================================================================
+   WARNING — AMBER
+   ========================================================================== */
+.ai-markdown .ai-callout--warning {
+    --callout-color: var(--md-warning);
+    --callout-title: var(--md-warning-bright);
+    --callout-bg: var(--md-warning-bg);
+    --callout-border: var(--md-warning-border);
+}
+
+/* ==========================================================================
+   CAUTION — RED
+   ========================================================================== */
+.ai-markdown .ai-callout--caution {
+    --callout-color: var(--md-danger);
+    --callout-title: var(--md-danger-bright);
+    --callout-bg: var(--md-danger-bg);
+    --callout-border: var(--md-danger-border);
+}
+
+/* ==========================================================================
+   NORMAL BLOCKQUOTE
+   ========================================================================== */
+
+.ai-markdown > blockquote,
+.ai-markdown blockquote {
+    margin: 18px 0;
+    padding: 11px 17px;
+    border-left: 2px solid rgba(255, 255, 255, 0.20);
+    border-radius: 0 8px 8px 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.045), transparent);
+    color: var(--md-text-secondary);
+}
+
+.ai-markdown blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   TABLES — NEUTRAL PREMIUM DARK
+   ========================================================================== */
+
+.ai-markdown .ai-table-wrap {
+    position: relative;
+    width: 100%;
+    margin: 18px 0;
+    overflow-x: auto;
+    border: 1px solid rgba(255, 255, 255, 0.085);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.018);
+}
+
+/* Table Copy Button in Right Corner (Same size & style as code block copy button) */
+.ai-markdown .ai-table-copy-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 6px;
+    color: #ffffff;
+    opacity: 0.65;
+    cursor: pointer;
+    padding: 0;
+    flex-shrink: 0;
+    transition: background 0.15s ease, opacity 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.ai-markdown .ai-table-copy-btn:hover,
+.ai-markdown .ai-table-copy-btn:focus-visible {
+    opacity: 1;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.ai-markdown .ai-table-copy-btn:active {
+    transform: scale(0.92);
+}
+
+.ai-markdown .ai-table-copy-btn.copied {
+    opacity: 1;
+    color: var(--palette-success);
+    background: color-mix(in srgb, var(--palette-success) 16%, transparent);
+}
+
+.ai-markdown .ai-table-copy-btn .icon {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.ai-markdown .ai-table-copy-btn .ai-icon-copy {
+    display: block;
+}
+
+.ai-markdown .ai-table-copy-btn .ai-icon-check {
+    display: none;
+}
+
+.ai-markdown .ai-table-copy-btn.copied .ai-icon-copy {
+    display: none;
+}
+
+.ai-markdown .ai-table-copy-btn.copied .ai-icon-check {
+    display: block;
+}
+
+.ai-markdown .ai-table-copy-btn .ai-code-tooltip {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    background: #18181a;
+    color: #ffffff;
+    font-family: var(--ai-font-sans, 'Inter', sans-serif);
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-3px);
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+    z-index: 25;
+}
+
+.ai-markdown .ai-table-copy-btn:hover .ai-code-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ai-markdown .ai-markdown-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.92rem;
+}
+
+/* Header */
+.ai-markdown .ai-markdown-table th {
+    padding: 11px 14px;
+    color: #d7d9df;
+    background: rgba(255, 255, 255, 0.045);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.085);
+    font-size: 0.76rem;
+    font-weight: 650;
+    letter-spacing: 0.045em;
+    text-transform: uppercase;
+    text-align: left;
+}
+
+.ai-markdown .ai-markdown-table th:last-child {
+    padding-right: 44px;
+}
+
+/* Cells */
+.ai-markdown .ai-markdown-table td {
+    padding: 11px 14px;
+    color: var(--md-text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+/* Last row */
+.ai-markdown .ai-markdown-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/* Subtle hover */
+.ai-markdown .ai-markdown-table tbody tr {
+    transition: background 140ms ease;
+}
+
+.ai-markdown .ai-markdown-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.025);
+}
+
+/* Inline code inside tables */
+.ai-markdown .ai-markdown-table code {
+    font-size: 0.82em;
+}
+
+/* ==========================================================================
+   LISTS & BULLETS
+   ========================================================================== */
+
+.ai-markdown ul,
+.ai-markdown ol {
+    margin: 10px 0 16px 24px;
+    padding: 0;
+}
+
+.ai-markdown li {
+    margin: 5px 0;
+}
+
+.ai-markdown li > ul,
+.ai-markdown li > ol {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.ai-markdown ul li::marker {
+    color: #ffffff;
+}
+
+.ai-markdown ol li::marker {
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* ==========================================================================
+   TASK LISTS
+   ========================================================================== */
+
+.ai-markdown ul:has(> li > input[type="checkbox"]),
+.ai-markdown ul.contains-task-list {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.ai-markdown li:has(> input[type="checkbox"]),
+.ai-markdown li.task-list-item {
+    list-style: none;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 8px 0;
+    padding-left: 0;
+    color: var(--md-text);
+    font-size: 0.98rem;
+    line-height: 1.6;
+}
+
+.ai-markdown input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 17px;
+    height: 17px;
+    margin: 3px 0 0 0;
+    flex-shrink: 0;
+    border-radius: 5px;
+    border: 1.5px solid var(--md-border-hover);
+    background: #222225;
+    cursor: default;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+}
+
+.ai-markdown input[type="checkbox"]:hover {
+    border-color: #42a5f5;
+    background: rgba(66, 165, 245, 0.12);
+}
+
+.ai-markdown input[type="checkbox"]:checked {
+    background-color: #42a5f5;
+    border-color: #42a5f5;
+    background-image: url("../../../../assets/icons/task-check.svg");
+    background-size: 11px 11px;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: none;
+}
+
+.ai-markdown li:has(> input[type="checkbox"]:checked) {
+    color: var(--md-text-muted);
+}
+
+.ai-markdown li:has(> input[type="checkbox"]:checked) strong {
+    color: #aeb4bd;
+}
+
+/* ==========================================================================
+   MATHEMATICS (KaTeX)
+   ========================================================================== */
+
+.ai-markdown .katex {
+    font-size: 1.05em;
+    color: var(--md-text);
+}
+
+.ai-markdown .katex-display {
+    margin: 20px 0;
+    padding: 13px 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border: 1px solid var(--md-brand-border);
+    border-radius: 9px;
+    background: linear-gradient(100deg, var(--md-brand-bg), var(--md-info-bg));
+}
+
+.ai-markdown .katex-display .katex {
+    color: var(--md-text);
+}
+
+/* ==========================================================================
+   IMAGES
+   ========================================================================== */
+
+.ai-markdown .ai-markdown-image {
+    margin: 20px 0;
+}
+
+.ai-markdown .ai-markdown-image img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 11px;
+    background: #101217;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+
+.ai-markdown .ai-markdown-image figcaption {
+    margin-top: 7px;
+    color: var(--md-text-muted);
+    font-size: .78rem;
+}
+
+/* ==========================================================================
+   MARKDOWN SCROLLBARS
+   ========================================================================== */
+
+.ai-markdown * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.16) transparent;
+}
+
+.ai-markdown *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.ai-markdown *::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.ai-markdown *::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+}
+
+.ai-markdown *::-webkit-scrollbar-thumb:hover {
+    background: rgba(75, 166, 255, 0.38);
+}
+
+/* ==========================================================================
+   RESPONSIVE OPTIMIZATION
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    .ai-markdown {
+        padding: 0 16px 0 2px;
+    }
+    .ai-markdown .ai-markdown-table th,
+    .ai-markdown .ai-markdown-table td {
+        padding: 10px 12px;
+    }
+    .ai-markdown .ai-code-block pre {
+        padding: 13px 14px;
+    }
+}

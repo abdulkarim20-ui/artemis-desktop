@@ -1,0 +1,15 @@
+.main {
+  flex: 1;
+  min-width: 0;
+  margin: 0 9px 8px 0;
+  background: var(--bg-panel);
+  border: 0.5px solid var(--border);
+  border-radius: var(--panel-radius);
+  overflow: auto;
+  transition: border-left-color 0.18s var(--ease);
+}
+
+body.sidebar-resize-active .main,
+body.is-resizing-sidebar .main {
+  border-left-color: var(--focus);
+}

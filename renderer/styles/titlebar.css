@@ -1,0 +1,96 @@
+.titlebar {
+  position: relative;
+  z-index: 101;                       /* above the settings backdrop */
+  height: var(--titlebar-h);
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 12px;
+  padding-right: 8px;
+  -webkit-app-region: drag;          /* drag the window by the bar */
+}
+
+/*
+ * Electron 44+ inherits app-region into descendants. Without this reset, the
+ * group boxes inherit "drag" and their rectangles sit on top of the window
+ * buttons in the native hit test, so close/minimize/maximize never see a
+ * click. "initial" is the neutral value; "none" would count as no-drag.
+ */
+.titlebar > * { -webkit-app-region: initial; }
+
+.titlebar-group { display: flex; align-items: center; gap: 4px; height: 100%; }
+
+.titlebar-left { gap: 12px; }
+.titlebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  color: var(--text);
+  white-space: nowrap;
+  -webkit-app-region: drag;
+}
+.titlebar-brand .brand-logo {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  margin: 0;
+  display: block;
+}
+.titlebar-brand-name {
+  font-family: 'Space Grotesk', var(--font);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.icon-btn {
+  -webkit-app-region: no-drag;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.icon-btn:hover { background: var(--hover); color: var(--text); }
+.icon-btn:focus,
+.icon-btn:focus-visible { outline: none; }
+
+.titlebar-sidebar-toggle { position: relative; }
+.titlebar-sidebar-toggle .icon {
+  position: absolute;
+  inset: 0;
+  width: 18px;
+  height: 18px;
+  margin: auto;
+  transition: opacity 0.14s var(--ease);
+}
+.titlebar-sidebar-toggle[aria-expanded="true"] .icon-sidebar-collapsed,
+.titlebar-sidebar-toggle[aria-expanded="false"] .icon-sidebar {
+  opacity: 0;
+}
+
+.win-controls { display: flex; align-items: center; gap: 4px; height: 100%; margin-left: 8px; }
+
+.win-btn {
+  -webkit-app-region: no-drag;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+}
+.win-btn .icon { width: 16px; height: 16px; }
+.win-btn:hover { background: var(--hover); color: var(--text); }
+.win-btn:focus,
+.win-btn:focus-visible { outline: none; }
+.win-btn.close:hover { background: var(--palette-danger); color: var(--palette-ink); }

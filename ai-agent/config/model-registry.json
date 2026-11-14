@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "defaultModel": "groq:openai/gpt-oss-120b",
+  "models": [
+    {
+      "id": "groq:openai/gpt-oss-120b",
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "name": "GPT OSS 120B",
+      "description": "High-capability reasoning model",
+      "providerLabel": "Groq",
+      "family": "GPT OSS",
+      "capabilities": {
+        "streaming": true,
+        "reasoning": true,
+        "tools": true,
+        "webSearch": false,
+        "codeExecution": false,
+        "vision": false
+      },
+      "request": {
+        "temperature": 1,
+        "max_completion_tokens": 4096,
+        "top_p": 1,
+        "reasoning_effort": "medium",
+        "stream": true
+      }
+    },
+    {
+      "id": "groq:openai/gpt-oss-20b",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "name": "GPT OSS 20B",
+      "description": "Fast, efficient reasoning model",
+      "providerLabel": "Groq",
+      "family": "GPT OSS",
+      "capabilities": {
+        "streaming": true,
+        "reasoning": true,
+        "tools": true,
+        "webSearch": false,
+        "codeExecution": false,
+        "vision": false
+      },
+      "request": {
+        "temperature": 1,
+        "max_completion_tokens": 2048,
+        "top_p": 1,
+        "reasoning_effort": "medium",
+        "stream": true,
+        "stop": null
+      }
+    },
+    {
+      "id": "groq:qwen/qwen3.8-27b",
+      "provider": "groq",
+      "model": "qwen/qwen3.8-27b",
+      "name": "Qwen 3.8 27B",
+      "description": "Advanced Qwen model with strong reasoning",
+      "providerLabel": "Groq",
+      "family": "Qwen",
+      "capabilities": {
+        "streaming": true,
+        "reasoning": true,
+        "tools": true,
+        "webSearch": false,
+        "codeExecution": false,
+        "vision": true
+      },
+      "imageLimits": {
+        "maxImages": 3,
+        "maxImageBytes": 1000000,
+        "maxTotalImageBytes": 3000000
+      },
+      "request": {
+        "temperature": 1,
+        "max_completion_tokens": 4096,
+        "top_p": 0.95,
+        "reasoning_effort": "medium",
+        "reasoning_format": "parsed",
+        "stream": true,
+        "stop": null
+      }
+    },
+    {
+      "id": "nvidia:nvidia/nemotron-3.5-super-vl-120b-a12b",
+      "provider": "nvidia",
+      "model": "nvidia/nemotron-3.5-super-vl-120b-a12b",
+      "name": "Nemotron 3.5 Super VL 120B",
+      "description": "NVIDIA vision-language reasoning model for complex multimodal and long-context tasks",
+      "providerLabel": "NVIDIA",
+      "family": "Nemotron",
+      "capabilities": {
+        "streaming": true,
+        "reasoning": true,
+        "reasoningSummary": true,
+        "tools": true,
+        "webSearch": false,
+        "codeExecution": false,
+        "vision": true
+      },
+      "imageLimits": {
+        "maxImages": 3,
+        "maxImageBytes": 1000000,
+        "maxTotalImageBytes": 3000000
+      },
+      "request": {
+        "temperature": 1,
+        "top_p": 0.95,
+        "max_tokens": 16384,
+        "stream": true,
+        "parallel_tool_calls": true,
+        "seed": 42,
+        "chat_template_kwargs": {
+          "enable_thinking": true
+        }
+      }
+    }
+  ]
+}

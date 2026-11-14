@@ -1,0 +1,498 @@
+/* ==========================================================================
+   ATTACHMENTS COMPONENT STYLES (components/attachments/attachments.css)
+   Standalone, reusable image cards & file pills with hover actions & tooltips
+   ========================================================================== */
+
+/* File & Image Attachments Preview Row */
+.ai-attachments-preview {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* Image Attachment Card (rounded thumbnail) */
+.ai-attachment-image-card {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border-radius: 14px;
+    background: #232325;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    flex-shrink: 0;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.ai-attachment-image-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+.ai-attachment-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Circular Close Button on top-right of image card */
+.ai-attachment-img-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #1a1a1c;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 140ms ease, transform 140ms ease, background-color 140ms ease;
+    z-index: 10;
+}
+
+.ai-attachment-image-card:hover .ai-attachment-img-remove,
+.ai-attachment-image-card:focus-within .ai-attachment-img-remove {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.ai-attachment-img-remove:hover {
+    background: #f0f0f2;
+    transform: scale(1.1);
+}
+
+.ai-attachment-img-remove:active {
+    transform: scale(0.92);
+}
+
+/* Tooltip on hover (light grey badge with dark text) */
+.ai-attachment-tooltip {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: #e2e2e4;
+    color: #18181b;
+    font-size: 0.76rem;
+    font-weight: 500;
+    line-height: 1.25;
+    padding: 5px 9px;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-3px);
+    transition: opacity 140ms ease, transform 140ms ease, visibility 140ms ease;
+    z-index: 30;
+}
+
+.ai-attachment-image-card:hover .ai-attachment-tooltip,
+.ai-attachment-tag:hover .ai-attachment-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Non-Image Document Tag */
+.ai-attachment-tag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.1));
+    border-radius: var(--ai-radius-sm, 8px);
+    padding: 4px 6px 4px 8px;
+    font-size: 0.82rem;
+    color: var(--ai-text-primary, #ffffff);
+    max-width: 260px;
+    user-select: none;
+    transition: background var(--ai-transition-fast), border-color var(--ai-transition-fast);
+}
+
+.ai-attachment-tag:hover {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.16);
+}
+
+.ai-attachment-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.ai-attachment-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--ai-accent, var(--palette-coral));
+    flex-shrink: 0;
+}
+
+.ai-attachment-img-remove .icon {
+    width: 11px;
+    height: 11px;
+}
+
+.ai-attachment-remove .icon,
+.ai-ap-remove .icon,
+.ai-ap-icon-btn .icon {
+    width: 13px;
+    height: 13px;
+}
+
+.ai-attachment-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    color: var(--ai-text-primary, #ffffff);
+}
+
+.ai-attachment-remove {
+    background: transparent;
+    border: none;
+    color: var(--ai-text-muted, #9ea0a6);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border-radius: 4px;
+    flex-shrink: 0;
+    transition: color var(--ai-transition-fast), background var(--ai-transition-fast);
+}
+
+.ai-attachment-remove:hover {
+    color: var(--ai-text-primary, #ffffff);
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.ai-attachment-remove:active {
+    transform: scale(0.9);
+}
+
+/* ==========================================================================
+   COMPACT TRAY EXTRAS: "+N more" chip, image "+N" tile, notice
+   ========================================================================== */
+
+.ai-attachment-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px dashed var(--ai-border-hover, rgba(255, 255, 255, 0.22));
+    border-radius: var(--ai-radius-sm, 8px);
+    padding: 4px 10px 4px 8px;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--ai-text-primary, #ffffff);
+    cursor: pointer;
+    transition: background var(--ai-transition-fast, 140ms ease), border-color var(--ai-transition-fast, 140ms ease);
+}
+
+.ai-attachment-more:hover,
+.ai-attachment-more[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.11);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ai-attachment-more:focus-visible,
+.ai-attachment-more-tile:focus-visible,
+.ai-ap-btn:focus-visible,
+.ai-ap-icon-btn:focus-visible,
+.ai-ap-remove:focus-visible {
+    outline: 2px solid var(--ai-accent, var(--palette-coral));
+    outline-offset: 2px;
+}
+
+.ai-attachment-more-tile {
+    width: 68px;
+    height: 68px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px dashed var(--ai-border-hover, rgba(255, 255, 255, 0.22));
+    color: var(--ai-text-primary, #ffffff);
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--ai-transition-fast, 140ms ease);
+}
+
+.ai-attachment-more-tile:hover {
+    background: rgba(255, 255, 255, 0.11);
+}
+
+.ai-attachments-notice {
+    flex: 0 0 100%;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    color: var(--ai-text-muted, #9ea0a6);
+}
+
+/* ==========================================================================
+   FILES PANEL (opens above the input)
+   ========================================================================== */
+
+.ai-attachments-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% + 8px);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    max-height: min(360px, 60vh);
+    background: var(--ai-bg-input, #1f1f20);
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.1));
+    border-radius: 14px;
+    box-shadow: var(--ai-shadow-card, 0 12px 36px rgba(0, 0, 0, 0.45));
+    overflow: hidden;
+    animation: ai-ap-in 140ms ease;
+}
+
+.ai-attachments-panel.ai-hidden {
+    display: none;
+}
+
+@keyframes ai-ap-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.ai-ap-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px 10px 14px;
+    border-bottom: 1px solid var(--ai-border, rgba(255, 255, 255, 0.08));
+}
+
+.ai-ap-title {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    min-width: 0;
+}
+
+.ai-ap-count {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--ai-text-primary, #ffffff);
+}
+
+.ai-ap-size {
+    font-size: 0.78rem;
+    color: var(--ai-text-muted, #9ea0a6);
+}
+
+.ai-ap-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ai-ap-btn {
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--ai-text-muted, #9ea0a6);
+    cursor: pointer;
+    transition: color var(--ai-transition-fast, 140ms ease), background var(--ai-transition-fast, 140ms ease);
+}
+
+.ai-ap-btn:hover {
+    color: var(--ai-text-primary, #ffffff);
+    background: var(--ai-bg-surface-hover, rgba(255, 255, 255, 0.08));
+}
+
+.ai-ap-icon-btn,
+.ai-ap-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--ai-text-muted, #9ea0a6);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color var(--ai-transition-fast, 140ms ease), background var(--ai-transition-fast, 140ms ease);
+}
+
+.ai-ap-icon-btn:hover,
+.ai-ap-remove:hover {
+    color: var(--ai-text-primary, #ffffff);
+    background: var(--ai-bg-surface-hover, rgba(255, 255, 255, 0.1));
+}
+
+.ai-ap-search {
+    padding: 8px 12px 0;
+}
+
+.ai-ap-search.ai-hidden,
+.ai-ap-meter.ai-hidden {
+    display: none;
+}
+
+.ai-ap-search-input {
+    width: 100%;
+    height: 32px;
+    padding: 0 10px;
+    background: var(--ai-bg-surface-hover, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--ai-border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.82rem;
+    color: var(--ai-text-primary, #ffffff);
+    outline: none;
+}
+
+.ai-ap-search-input:focus {
+    border-color: var(--ai-border-hover, rgba(255, 255, 255, 0.28));
+}
+
+.ai-ap-meter {
+    padding: 10px 14px 2px;
+}
+
+.ai-ap-bar {
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.ai-ap-bar > span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: #5aa86b;
+    transition: width 200ms ease;
+}
+
+.ai-ap-meter.is-warn .ai-ap-bar > span {
+    background: var(--ai-accent, var(--palette-coral));
+}
+
+.ai-ap-meter-text {
+    margin-top: 6px;
+    font-size: 0.76rem;
+    line-height: 1.35;
+    color: var(--ai-text-muted, #9ea0a6);
+}
+
+.ai-ap-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 6px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.ai-ap-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 6px 5px 8px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    color: var(--ai-text-primary, #ffffff);
+}
+
+.ai-ap-row:hover {
+    background: var(--ai-bg-surface-hover, rgba(255, 255, 255, 0.06));
+}
+
+.ai-ap-name {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.ai-ap-dir {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--ai-text-muted, #9ea0a6);
+}
+
+.ai-ap-base {
+    flex: 0 1 auto;
+    min-width: 0;
+    max-width: 75%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.ai-ap-meta {
+    flex-shrink: 0;
+    font-size: 0.74rem;
+    color: var(--ai-text-muted, #9ea0a6);
+    font-variant-numeric: tabular-nums;
+}
+
+.ai-ap-empty {
+    padding: 16px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--ai-text-muted, #9ea0a6);
+}
+
+/* Light theme */
+:root[data-theme="light"] .ai-attachment-more,
+:root[data-theme="light"] .ai-attachment-more-tile {
+    background: rgba(0, 0, 0, 0.045);
+    border-color: var(--ai-border-hover);
+}
+
+:root[data-theme="light"] .ai-attachment-more:hover,
+:root[data-theme="light"] .ai-attachment-more[aria-expanded="true"],
+:root[data-theme="light"] .ai-attachment-more-tile:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="light"] .ai-ap-bar {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme="light"] .ai-ap-list {
+    scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
