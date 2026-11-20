@@ -7,12 +7,13 @@ const MIME_TYPES = [
 ];
 
 export class VoiceRecorder {
-  constructor({ apiBase, onState, onText, onError, onLevel, mediaDevices, MediaRecorder: Recorder, fetchImpl } = {}) {
+  constructor({ apiBase, onState, onText, onError, onLevel, onStream, mediaDevices, MediaRecorder: Recorder, fetchImpl } = {}) {
     this.apiBase = String(apiBase || '').replace(/\/+$/, '');
     this.onState = onState || (() => {});
     this.onText = onText || (() => {});
     this.onError = onError || (() => {});
     this.onLevel = onLevel || (() => {});
+    this.onStream = onStream || (() => {});
     this.mediaDevices = mediaDevices || globalThis.navigator?.mediaDevices;
     this.MediaRecorder = Recorder || globalThis.MediaRecorder;
     this.fetch = fetchImpl || globalThis.fetch?.bind(globalThis);
@@ -93,6 +94,7 @@ export class VoiceRecorder {
       recorder.onstop = () => { void this.finish(recorder); };
       recorder.start();
       this.setState('recording');
+      if (!this.destroyed) this.onStream(stream);
       this.startLevelMeter(stream);
     } catch (error) {
       this.stopTracks(stream);
@@ -132,6 +134,7 @@ export class VoiceRecorder {
     this.recordedBytes = 0;
     this.recorder = null;
     this.stopLevelMeter();
+    this.onStream(null);
     this.stopTracks(this.stream);
     this.stream = null;
 
@@ -267,6 +270,7 @@ export class VoiceRecorder {
     this.cancelled = true;
     this.abortController?.abort();
     this.stopLevelMeter();
+    this.onStream(null);
     if (this.recorder && this.recorder.state !== 'inactive') {
       this.recorder.stop();
     }

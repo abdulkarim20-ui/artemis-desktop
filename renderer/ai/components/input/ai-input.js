@@ -115,9 +115,7 @@ class AIInputBox {
 
                                 <div class="ai-voice-active-bar" data-ref="voiceActive" role="group" aria-label="Recording audio. Cancel to discard or finish to transcribe." hidden>
                                     <div class="ai-voice-wave" data-ref="voiceWave" aria-hidden="true">
-                                        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-                                        <span></span><span></span><span></span><span></span><span></span><span></span>
-                                        <span></span><span></span><span></span><span></span><span></span><span></span>
+                                        <canvas class="ai-voice-wave-canvas" data-ref="voiceWaveCanvas"></canvas>
                                     </div>
                                     <button type="button" class="ai-voice-action-btn ai-voice-cancel-btn" data-ref="voiceCancel" title="Cancel recording" aria-label="Cancel recording">
                                         <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -174,7 +172,7 @@ class AIInputBox {
             voiceActive: this.container.querySelector('[data-ref="voiceActive"]'),
             voiceCancel: this.container.querySelector('[data-ref="voiceCancel"]'),
             voiceDone: this.container.querySelector('[data-ref="voiceDone"]'),
-            voiceWaveBars: Array.from(this.container.querySelectorAll('[data-ref="voiceWave"] > span')),
+            voiceWaveCanvas: this.container.querySelector('[data-ref="voiceWaveCanvas"]'),
             micStatus: this.container.querySelector('[data-ref="micStatus"]'),
             sendBtn: this.container.querySelector('[data-ref="sendBtn"]'),
             fileInput: this.container.querySelector('[data-ref="fileInput"]'),
@@ -183,6 +181,10 @@ class AIInputBox {
             modelMenu: null,
             plusMenu: this.container.querySelector('[data-ref="plusMenu"]')
         };
+
+        this.voiceWaveform = typeof VoiceWaveform !== 'undefined' && this.el.voiceWaveCanvas
+            ? new VoiceWaveform(this.el.voiceWaveCanvas)
+            : null;
 
         // Initialize Modular AIAttachments Component
         this.attachmentsManager = typeof AIAttachments !== 'undefined'
@@ -670,6 +672,12 @@ class AIInputBox {
         textarea.focus();
     }
 
+    startMicWaveform(stream) {
+        if (this.voiceWaveform) {
+            void this.voiceWaveform.start(stream);
+        }
+    }
+
     setMicState(state) {
         const button = this.el.micBtn;
         if (!button) return;
@@ -703,19 +711,14 @@ class AIInputBox {
         }
         if (!recording) {
             this.el.root.classList.remove('has-audio-level');
-            this.el.voiceWaveBars.forEach((bar) => bar.style.removeProperty('--wave-scale'));
+            this.voiceWaveform?.stop();
         }
     }
 
     setMicLevel(level) {
         const normalized = Math.max(0, Math.min(1, Number(level) || 0));
         this.el.root.classList.add('has-audio-level');
-        const midpoint = (this.el.voiceWaveBars.length - 1) / 2;
-        this.el.voiceWaveBars.forEach((bar, index) => {
-            const centerWeight = 1 - Math.abs(index - midpoint) / midpoint;
-            const scale = 0.1 + normalized * (0.25 + centerWeight * 1.05);
-            bar.style.setProperty('--wave-scale', String(scale));
-        });
+        this.voiceWaveform?.setLevel(normalized);
     }
 
     setMicMessage(message) {
@@ -762,6 +765,10 @@ class AIInputBox {
         }
         if (this.attachmentsManager && typeof this.attachmentsManager.clear === 'function') {
             this.attachmentsManager.clear();
+        }
+        if (this.voiceWaveform && typeof this.voiceWaveform.destroy === 'function') {
+            this.voiceWaveform.destroy();
+            this.voiceWaveform = null;
         }
 
         if (this.container) {

@@ -667,6 +667,9 @@ export function mountChatView(root, params = {}) {
       };
       aiInput.setMicMessage(status[state] || '');
     },
+    onStream: (stream) => {
+      if (stream) aiInput.startMicWaveform(stream);
+    },
     onText: (text) => {
       aiInput.insertText(text);
     },

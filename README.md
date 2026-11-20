@@ -270,12 +270,14 @@ Key parameters configurable via `.env` or in-app Settings:
   - [Highlight.js](https://highlightjs.org/) for code syntax highlighting
 - Third-party licenses and notices are documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
-Copyright &copy; 2026 **AbdulKarim**. All rights reserved.
+Copyright &copy; 2026 **Abdulkarim**. All rights reserved.
 
 <div align="center">
 
 ---
 
 **Artemis** · *Sovereign Desktop AI · Local Intelligence · Private by Design*
+
+Built by Abdulkarim
 
 </div>

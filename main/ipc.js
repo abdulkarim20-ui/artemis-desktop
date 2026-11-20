@@ -2,6 +2,7 @@ const { app, ipcMain, shell, BrowserWindow } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { registerApiKeyIpc } = require('./api-keys-ipc');
+const { AI_AGENT_PORT, AGENT_TOKEN } = require('./ai-server');
 
 const winOf = (event) => BrowserWindow.fromWebContents(event.sender);
 
@@ -22,6 +23,10 @@ function registerWindowIpc() {
   // The folder exists from launch, so "Open folder" always has something to
   // show - even before the first conversation was ever saved.
   fs.mkdirSync(historyFolder(), { recursive: true });
+
+  ipcMain.on('app:config', (event) => {
+    event.returnValue = { agentPort: AI_AGENT_PORT, apiToken: AGENT_TOKEN };
+  });
 
   ipcMain.on('window:minimize', (e) => winOf(e)?.minimize());
 

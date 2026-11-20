@@ -324,7 +324,8 @@ test("the input hides send while voice input is busy", async () => {
   assert.match(source, /if \(this\.state\.micBusy\) return;/);
   assert.match(source, /classList\.toggle\('is-requesting', state === 'requesting'\)/);
   assert.match(styles, /\.ai-mic-btn\.is-requesting::after,\s*\.ai-mic-btn\.is-transcribing::after\s*\{/);
-  assert.doesNotMatch(source, /voiceModeBtn|voiceActiveBar|voiceWaveCanvas|startVoiceInput|ScrollingWave/);
+  assert.doesNotMatch(source, /voiceModeBtn|voiceActiveBar|startVoiceInput|ScrollingWave/);
+  assert.match(html, /voice-waveform\.js/);
   assert.doesNotMatch(styles, /ai-voice-mode-btn|is-listening/);
   assert.doesNotMatch(aiStyles, /voice-ui\.css/);
   assert.doesNotMatch(html, /voice-wave\.js/);
